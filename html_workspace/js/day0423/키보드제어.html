@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #stage{
+            width: 1000px;
+            height: 576px;
+            background-image: url(../../images/plane/bg.jpg);
+            background-position: 0px 0px; /*x축, y축 방향*/
+            margin: auto;
+            position: relative;  /* 자식 요소에 포지션이 지정되었으므로.. */
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        let stage;
+        let bgX = 0; // 배경의 x축 값을 누적시킬 전역변수
+        let img; 
+        let l=300, t = 200;
+
+        // js로 css 배경을 제어해보자
+        function bgEffect() {
+            // 현재 stage div에 적용된 배경 이미지의 포지션의 left 값을 감소시켜보자
+            bgX -= 5;
+            stage.style.backgroundPosition= bgX + "px 0px";
+        }
+
+        // 사용자가 누른 키보드 방향대로 움직이게 함
+        // L, R : left 감소, 증가
+        // Up, Down : top 감소, 증가
+        const val = 15;
+        function move(){
+            let key = event.keyCode;
+
+            // if(key == 65) {  l -= val; }
+            // else if (key == 68) { l += val; }
+            // else if(key == 83){ t += val; }
+            // else if(key ==87){ t -= val; } 
+            // else { console.log("잘못된 입력"); }
+
+            switch(key){
+                case 65: 
+                    l -= val;
+                    break;
+                case 68:
+                    l += val;
+                    break;
+                case 83: 
+                    t += val; 
+                    break;
+                case 87: 
+                    t -= val; 
+                    break;
+            }
+        
+            img.style.left = l + "px";
+            img.style.top = t + "px";
+        }
+
+        function init() {
+            // 지금까지는 이미지를 body 태그에 직접 작성해서 존재시켰으나, 
+            // 이제는 js에서 동적(=runtime 프로그램 실행되는 동안)으로 이미지를 생성하여 화면에 부착해보자
+            img = document.createElement("img");  // <img> 태그 작성과 동일
+            img.src="../../images/plane/plane.png";
+            img.style.width="50px";
+            img.style.position="absolute";
+            img.style.left = 300 + "px";
+            img.style.top = 200 + "px";
+                
+            
+            // 기존에 없었던 요소를 생성할때는 createElement()이지만,
+            // 이미 문서에 존재하는 요소를 가져올때는 getElementBy~(), querySelector() 사용 
+            stage = document.getElementById("stage");
+            
+            // img를 어느 부모밑에 부착할지를 결정
+            stage.appendChild(img);
+
+            // 사람대신 컴퓨터(js)가 우리가 정의해놓은 함수를 호출하는 기능을 이용하여, 자동 배경 효과를 구현 
+            setInterval("bgEffect()", 10000);  // ms(1/1000 초) 단위 
+            console.log("HI");
+        }
+    </script>
+</head>
+<!-- onLoad : 문서 로드가 완료되면 지정한 함수 호출 -->
+<body onLoad="init()" onkeydown="move()">
+    <div id="stage">
+        
+        
+    </div>
+</body>
+</html>

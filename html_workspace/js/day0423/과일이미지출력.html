@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let img;        
+        function init(){
+            //img = document.createElement("img");
+            img = document.querySelector("img");
+            img.style.width = "200px";
+        }
+
+        function setImgSrc(){
+            let fileName = "../../images/fruit/";
+
+            // prompt는 사용자의 입력을 모두 문자열로 처리한다.
+            let input = prompt("과일을 선택하세요.\n 1.사과 2.바나나 3.복숭아 4.체리 5.포도");
+            input = parseInt(input);
+
+            switch(input) {
+                case 1: fileName +="apple.png"; break;
+                case 2: fileName +="banana.png"; break;
+                case 3: fileName +="peach.png"; break;
+                case 4: fileName +="cherry.png"; break;
+                case 5: fileName +="grape.png"; break;
+                default: alert("잘못된 입력");
+            }
+
+            img.src = fileName;
+        }
+    </script>
+</head>
+<body onload="init()">
+    <button onclick="setImgSrc()"> 프롬프트 띄우기 </button>
+    <img>
+   
+</body>
+</html>
