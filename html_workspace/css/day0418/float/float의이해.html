@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-size: 19px;
+        }
+        /* float: 현재 이미지가 차지하고 있던 정상적인 위치(normal position)를 벗어나는 것  */
+        /* float 적용 시, img 후에 위치한 모든 요소들 중 인라인 요소들은 이미지의 float된 위치를 인식함
+         /* 블럭 요소들은 float된 요소를 인식하지 못해 이미지 공간을 침범한다. */ 
+        img{
+            float:left;
+        }
+        #box{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <img src="../../images/tenor.gif" width="200px">
+    <div id="box">블럭요소</div>
+    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste laudantium modi assumenda sapiente quae mollitia placeat earum doloremque eaque dignissimos! Error voluptatum sequi minus est odit reiciendis illo itaque accusantium.
+    Sed veniam adipisci assumenda nobis nesciunt soluta at quos nisi, eius sequi eligendi perspiciatis, itaque odit dicta cupiditate sunt harum est obcaecati. Sunt, harum reprehenderit. Voluptas qui expedita ut unde.
+    Quae tempora repellat quia totam iure iste, dolorum impedit suscipit velit ut esse laboriosam eaque voluptatibus molestias doloremque, eum vitae odio cum modi repudiandae! Vero harum numquam facilis fugit repudiandae!
+    Ipsum vel fugiat quisquam corrupti consequuntur. Consequuntur error earum necessitatibus beatae aliquam iusto, distinctio molestiae itaque nihil culpa harum, tempore facilis vel fugit officia numquam cumque cupiditate sit, rerum dolorem!
+    Distinctio molestiae vero enim ut! Iusto sint, laudantium sapiente tempora delectus minima at commodi atque consectetur animi, a minus libero? Architecto tenetur deserunt at, excepturi animi tempore quisquam optio cum. -->
+</body>
+</html>
+
+<!-- 글씨 자체도 인라인 요소  -->

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 400px;
+        }
+        #box1{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            float: left;
+        }
+        #box2{
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+        }
+        #footer{
+            background-color: aqua;
+            width: 400px;
+            height: 50px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+    <div id="box1">박스1</div>
+    <div id="box2">박스2</div>
+    <div id="footer">푸터</div>
+</div>
+</body>
+</html>
+
+<!-- 공중으로 뜨면 공존 -->
+<!-- block 요소는 float을 인식하지 못하고 침범
+/* div는 block이라 footer가 침범함 
+ 근데 <div>글씨</div> 에서 글씨는 인라인요소라 float을 인식하고 침범하지 않아서 남아있게 됨  */
