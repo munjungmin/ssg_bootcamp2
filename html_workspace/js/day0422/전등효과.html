@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 900px;
+            height: 600px;
+            margin: auto;
+        }
+
+        #aside{
+            width: 100px;
+            height: 100%;
+            float: left;
+            background-color: orange;
+        }
+
+        #section{
+            width: 800px;
+            height: 100%;
+            float:left;
+            background-color: orangered;
+            position:relative; /*나의 자식 중 하나라도 absolute, relative가 적용되어 있으면 부모인 내가 그 기준을 마련해야 하므로, absolute나 relative 중 하나는 적용이 되어있어야 한다.*/
+        }
+
+        #section img{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            filter: brightness(50%);
+        }
+
+        #dark{
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            /* 부모인 section을 기준으로 위치를 결정하는 absolute로 지정 */
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            opacity: 0.6;
+        }
+    </style>
+
+    <script>
+        let flag = false;
+        function onoff(){
+            flag = !flag;
+            let state = flag ? "on":"off";
+            let img = document.querySelector("#aside img");
+            img.src = "../../images/light/switch_" + state + ".png";
+
+            let opacity = flag ? 0 : 0.6;
+            document.querySelector("#dark").style.opacity = opacity;
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <img onclick="onoff()" src="../../images/light/switch_off.png">
+        </div>
+        <div id="section">
+            <img src="../../images/light/room.jpg" alt="">
+            <div id="dark"> </div>
+        </div>
+    </div>
+
+</body>
+</html>

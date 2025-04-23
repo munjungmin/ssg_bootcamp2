@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1000px;
+            height: 700px;
+            margin: auto;
+        }
+
+        #header, #footer{
+            width: 100%;
+            height: 50px;
+            background-color: deepskyblue;
+        }
+
+        #side_up, #side_bottom{
+            width: 500px;
+            height: 300px;
+        }
+
+        #side_up{
+            background-color: coral;
+        }
+        #side_bottom{
+            background-color: pink;
+        }
+
+        #side_left{
+            float:left;
+        }
+        #side_right{
+            background-color: orange;
+            float: left;
+            width: 500px;
+            height: 600px;
+        }
+        #footer{
+            clear:both;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">header</div>
+
+        <div id="side_left">
+            <div id="side_up">up</div>
+            <div id="side_bottom">bottom</div>
+        </div>
+
+        <div id="side_right">right</div>
+        <div id="footer">footer</div>
+    </div>
+
+</body>
+</html>

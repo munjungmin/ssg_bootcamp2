@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 900px;
+            height: 600px;
+            margin:auto;
+        }
+        #keypad{
+            width: 200px;
+            height: 600px;
+            background-color: aqua;
+            float: left;
+            align-content: center;
+        }
+        #section{
+            width: 700px;
+            height: 600px;
+            float: left;
+            overflow:hidden;
+            position: relative;
+            background-image: url(../../images/plane/bg.jpg);
+            
+        }
+
+        button{
+            width: 50px;
+            height: 40px;
+            background-color: aquamarine;
+            border-radius: 20%;
+        }
+
+        #hero{
+            width: 50px;
+            position: absolute;
+
+        }
+    </style>
+
+    <script>
+        // 문서 내의 hero 요소의 css 중 position 값 중 left값 증가
+        let r = 0;
+        let t = 0;
+        function moveRight(){
+            let hero = document.querySelector("#hero");
+            r += 50;
+            hero.style.left = r + "px";
+        }
+
+        function moveLeft(){
+            let hero = document.querySelector("#hero");
+            r -= 50;
+            hero.style.left = r + "px";
+        }
+        function moveDown(){
+            let hero = document.querySelector("#hero");
+            t += 50;
+            hero.style.top = t + "px";
+        }
+
+        function moveUp(){
+            let hero = document.querySelector("#hero");
+            t -= 50;
+            hero.style.top = t + "px";
+        }
+        
+
+
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <div id="keypad">
+            <table>
+                <tr>
+                    <td></td>
+                    <td><button onclick="moveUp()">⬆</button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><button onclick="moveLeft()">⬅</button></td>
+                    <td><button onclick="moveDown()">⬇</button></td>
+                    <td><button onclick="moveRight()">➡</button></td>
+                </tr>
+                
+            </table>
+
+
+        </div>
+        <div id="section">
+            <img id="hero" src="../../images/plane/plane.png" >
+        </div>
+    </div>
+</body>
+</html>
