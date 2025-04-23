@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p::before{
+            content:"새로 생성된 문자열이야";
+            color:red;
+        }
+        p::after{
+            content: "뒤에 생성된 문자열";
+            color:yellow;
+        }
+        #this{
+            border: 3px solid;
+        }
+    </style>
+</head>
+<body>
+    <p id="this">::before 예제</p>
+</body>
+</html>

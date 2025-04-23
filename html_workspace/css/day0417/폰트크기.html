@@ -1,0 +1,81 @@
+<!-- <font style="font-size: 10000">Lorem</font>ipsum dolor sit amet, consectetur adipisicing elit. Neque, amet. -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 폼</title>
+    <!-- css의 3가지 적용 방법 중, 내부 css(internal)는 style 태그 안에 css 코드 작성 -->
+    <!-- <style>
+        td{
+            font-size: 9px;
+            color: red;
+        }
+        input{
+            background-color: pink;
+        }
+    </style> -->
+
+    <!-- 스타일의 재사용성을 높이기 위해, 여러 문서에 걸쳐서 사용되는 CSS는 
+     공통 파일로 저장해놓고 링크시킨다. -->
+     <link rel="stylesheet" href="./css/style.css">
+ </head>
+ <body>
+    <table border="1" width="500px" align="center">
+        <tr>
+            <td colspan="2" align="center">회원가입</td>
+        </tr>
+        <tr>
+            <td style="font-size: 9px">ID</td>
+            <td>
+                <input type="text" placeholder="ID를 입력하세요">
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 9px">Password</td>
+            <td>
+                <input type="password" placeholder="비밀번호를 입력하세요" maxlength="8">
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 9px">Name</td>
+            <td><input type="text" placeholder="이름을 입력하세요"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                <input type="text" placeholder="메일 아이디 입력">
+                @
+                <select>
+                    <option value="">naver.com</option>
+                    <option value="">google.com</option>
+                    <option value="">daum.net</option>
+                    <option value="">hanmail.net</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>수신여부</td>
+            <td>
+                <input type="radio" name="email">수신함
+                <input type="radio" name="email">수신 안 함
+            </td>
+        </tr>
+        <tr>
+            <td>보유기술</td>
+            <td>
+                <input type="checkbox"> Java
+                <input type="checkbox"> Python
+                <input type="checkbox"> C++
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="button" value="가입"> 
+            </td>
+        </tr>
+    </table>
+
+ </body>
+ </html>
