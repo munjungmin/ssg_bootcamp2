@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 개발자가 프로그램을 실행하면 브라우저 내의 js엔진이 위에서부터 순서대로 아래줄로 내려가며 코드를 순차 수행 
+        // 이 함수를 호출할 때마다 1씩 증가하면서 줄넘기 횟수 출력해보기 
+        let count = 0;
+        function test(){
+            console.log("줄넘기 횟수", count++);
+        }
+
+    </script>
+</head>
+<body>
+    <!-- onclick은 js가 아닌 html에서 지원하는 이벤트 핸들러이다. -->
+    <!-- 즉 프로그램이 아니라 대소문자 구분을 안함 -->
+    <button onclick="test(), innerText=count">클릭</button>
+
+</body>
+</html>

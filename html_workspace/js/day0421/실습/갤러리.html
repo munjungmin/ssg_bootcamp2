@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        #wrapper{
+            width: 600px;
+            height: 600px;
+            background-color: beige;
+            margin: auto;
+
+        }
+        #header{
+            height: 50px;
+            background-color: lightblue;
+            /* 컨텐츠에 대한 수평 중앙 정렬 */
+            text-align: center;
+            line-height: 50px;
+        }
+
+        #header button:nth-child(1){
+            background-color: lightgreen;
+            border-radius: 5px;
+        }
+        #header button:nth-child(2){
+            background-color: lightcoral;
+            border-radius: 5px;
+        }
+        #section{
+            height: 550px;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        let n = 1;
+        function next() { 
+            ++n; 
+            document.querySelector("#pic").src = "../../../images/geographic/animal" + n + ".jpg";
+        }
+        function prev() {
+            --n;
+            document.querySelector("#pic").src = "../../../images/geographic/animal" + n + ".jpg";
+        }
+
+        // 문서 내의 img 요소의 src 속성 값을 1씩 증가시켜 대입한다.
+        
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header" >
+            <button onclick="prev()" >◀</button>
+            <button onclick="next()">▶</button>
+        </div>
+        <div id="section">
+            <img id ="pic" src="../../../images/geographic/animal1.jpg" alt="">
+        </div>
+    </div>
+</body>
+</html>

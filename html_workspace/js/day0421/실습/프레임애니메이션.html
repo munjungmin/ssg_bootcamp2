@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 버튼을 누를때마다, 현재 보고있는 이미지명의 숫자를 증가시키자
+        let x = 2;
+        function next(){
+            //문서내의 이미지가 보유한 src 속성의 값을 내가 원하는 경로로 교체
+            document.querySelector("img").src = "../../../images/hero/image" + x + ".png";
+            x++;
+        }
+    </script>
+    <style>
+        div{
+            width: 200px;
+            border: 2px solid;
+            text-align: center;
+
+        }
+    </style>
+
+</head>
+<body>
+    <img src="../../../images/hero/image1.png" alt="이미지 없음">
+    <div >
+        <button onclick="next()">다음 컷</button>
+    </div>
+</body>
+</html>

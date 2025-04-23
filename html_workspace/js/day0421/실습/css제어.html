@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 900px;
+            height: 800px;
+            margin: auto;
+        }
+        #aside{
+            background-color: yellow;
+            width: 200px;
+            height: 800px;
+            float: left;
+        }
+        #section{
+            background-color: green;
+            width: 700px;
+            height: 800px;
+            float: left;
+        }
+
+        #aside div{
+            text-align: center;
+            
+        }
+        #pic{
+            width: 300px;
+            height: 300px;
+            opacity: 0.5; /* 투명도 0 ~ 1 */
+        }
+        img{
+            width: 45px;
+            height: 45px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <div>
+                너비
+                <img src="../../../images/warior/plus_btn.png" alt="" onclick="setWidth(10)">
+                <img src="../../../images/warior/minus_btn.png" alt="" onclick="setWidth(-10)">
+            </div>
+            <div>
+                높이
+                <img src="../../../images/warior/plus_btn.png" alt="" onclick="setHeight(10)">
+                <img src="../../../images/warior/minus_btn.png" alt="" onclick="setHeight(-10)">
+                
+            </div>
+            <div>
+                투명도<img src="../../../images/warior/plus_btn.png" alt="" onclick="setOpacity(0.1)">
+                <img src="../../../images/warior/minus_btn.png" alt="" onclick="setOpacity(-0.1)">
+                
+            </div>
+            <div>
+                각도<img src="../../../images/warior/plus_btn.png" alt="" onclick="setRotation(10)">
+                <img src="../../../images/warior/minus_btn.png" alt="" onclick="setRotation(-10)">
+                
+            </div>
+        </div>
+        <div id="section">
+            <img id="pic" src="../../../images/warior/warior.png" alt="">
+        </div>
+    </div>
+
+    <script>
+        // 현재 여전사 이미지의 css 스타일 중 width, height, opacity, rotation 조정
+        let width = document.querySelector("#pic").offsetWidth;
+        let height = document.querySelector("#pic").offsetHeight;
+        let opacity = Number(getComputedStyle(document.querySelector("#pic")).opacity);
+        let rotation = parseFloat(getComputedStyle(document.querySelector("#pic")).offsetRotate.split(" ")[1]);  // "auto 0deg"를 split해서 숫자만 뽑아낸것
+
+        function setWidth(w){
+            width += w;
+            document.querySelector("#pic").style.width = width + "px";
+        }
+
+        function setHeight(h){
+            height += h;
+            document.querySelector("#pic").style.height = height + "px";
+        }
+
+        function setOpacity(o){
+            opacity += o;
+            document.querySelector("#pic").style.opacity = opacity;
+        }
+
+        function setRotation(r){
+            rotation += r;
+            document.querySelector("#pic").style.transform="rotate(" + rotation + "deg)";
+        }
+    </script>
+</body>
+</html>

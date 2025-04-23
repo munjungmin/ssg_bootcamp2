@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let x = 0;
+        function add() {
+            console.log(++x);
+        }
+        function subtract(){
+            console.log(--x);
+        }
+        function changeText(){
+            let str = document.getElementById("box");
+            str.innerText=x;
+        }
+    </script>
+
+    <style>
+        #box{
+            border: 2px solid pink;
+            background-color: rgb(253, 160, 107);
+            border-radius: 30%;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="add(), changeText()">증가</button>
+    <span id="box">안녕</span>
+    <button onclick="subtract(), changeText()">감소</button>
+
+</body>
+</html>
