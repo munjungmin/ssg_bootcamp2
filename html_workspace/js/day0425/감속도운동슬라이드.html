@@ -1,0 +1,50 @@
+<!-- x = 처음 x + 값
+
+내위치 = 현재내위치 + a* (목표 - 나현재) 
+x = x + a(기울기) * (target - x) ; -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let div;
+        let a = 0.1; //비율 계수(기울기), 숫자가 높을수록 투박함
+        let targetX = 800; // 도달할 목표지점 
+        //물체 생성용 함수
+        function createRect(){
+            div = document.createElement("div");
+            div.style.background ="red";
+            div.style.width = 50 + "px";
+            div.style.height = 50 + "px";
+            div.style.position = "absolute";
+            div.style.left= 0 + "px";
+            div.style.top = 100 + "px";
+            document.body.appendChild(div);
+        }
+        
+        // 물체 이동 함수
+        function move(){
+            // 새위치 = 기존위치 + (목표지점-현위치) * a |  a는 기울기, 비율계수?
+            // 남은거리의 정해진 비율로 증가한다는 뜻 
+            setTimeout("move()", 10000);
+            let pos = parseInt(div.style.left);
+            div.style.left = pos + a * (targetX - pos) + "px";
+        }
+
+        // console.log(div.style.left);   // 결과가 "30px" 문자열로 나와서 숫자 연산이 안됨 
+
+        addEventListener("load", function(){
+            createRect();
+            move();
+        });
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>

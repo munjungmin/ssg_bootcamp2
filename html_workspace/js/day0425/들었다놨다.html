@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            margin: 0;
+        }
+        #wrapper{
+            width: 850px;
+            height: 550px;
+        }
+        #content{
+            width: 700px;
+            height: 100%;
+            background-color: beige;
+            float: left;
+            position:relative; /*자식 때문에*/
+        }
+        #aside{
+            width: 150px;
+            height: 100%;
+            background-color: rgb(238, 195, 130);
+            float: left;
+            overflow: scroll;
+        }
+    </style>
+
+    <script>
+        // 프로그램에서 자주 사용될 가능성이 있는 요소들을 초기화 작업 시, 전역변수화 시켜놓자 (나중에는 전역변수 안쓸것)
+        //프로그래밍 가동되면, 초기화할 작업이 있을 경우 초기화 함수를 정의하는게 좋은 방법이다.
+        let content;
+        let aside;
+        let img; // 음식이미지, 다른 scope에서도 접근할 수 있도록 전역변수로 생성 
+        let flag = false;
+
+        function init(){    
+            content = document.getElementById("content");
+            aside = document.getElementById("aside");
+            createDish();
+            createFood(); // 음식 등장시키기
+
+            //문서 전체를 대상으로 마우스 이벤트를 연결하자 
+            // body는 document에서 유일하기 때문에 아래같은 코드가 허용된다.
+            document.body.addEventListener("mousemove", function(){
+                // 마우스에 의한 x, y 좌표를 이미지 좌표와 일치시키면 이미지가 마우스를 따라다니게 할 수 있음
+
+                let x = event.clientX; 
+                let y = event.clientY;
+
+                if(flag){
+                    // 유효한 범위라면 
+                    if(x <= 750-this.style.width && y <= 550-40){
+
+                        img.style.left = (x-35) + "px";
+                        img.style.top = (y-35) + "px";
+                        aside.innerHTML = aside.innerHTML + `x=${x}, y=${y}<br>`;
+                    }
+                }
+
+
+            })
+        }
+
+        function createFood(){
+            img = document.createElement("img");
+            img.src = "../../images/food/cake.png";
+            img.style.width = 100 + "px";
+            img.style.left = 100 + "px";
+            img.style.top = 100 + "px";
+
+            img.style.position = "absolute";
+            content.appendChild(img);
+
+            // 음식이 따라다니고 안따라다니고의 기준은 flag 변수이므로 
+            // 유저를 배려하여 클릭시마다 논리값을 뒤집어버리자
+            img.addEventListener("click", function(){
+                flag = !flag;
+
+
+                if(flag) {
+                    this.style.border = "5px dotted red";
+                    this.style.borderRadius = "20px";
+                }
+                else {
+                    this.style.border = "none";
+                }
+            });
+
+        }
+
+        function createDish(){
+            let div2 = document.createElement("div");
+            let div = document.createElement("div");
+
+            div2.style.width = 40 + "px";
+            div2.style.height = 40 + "px";
+
+            div2.style.backgroundColor="white";
+            div2.style.position="absolute";
+            div2.style.borderRadius = "60px";
+            div.appendChild(div2);
+            
+            div2.style.border = "2px solid lightgray"
+            div2.style.left="30%";
+            div2.style.top="30%";
+            
+
+            div.style.border = "2px solid gray";
+            div.style.borderRadius = "60px";
+            div.style.position = "absolute";
+            content.appendChild(div);
+
+            div.style.width= 100 +"px";
+            div.style.height= 100 +"px";
+            div.style.left = 500 + "px";
+            div.style.top = 200 + "px";
+            div.style.backgroundColor="white";
+            div.style.border = "2px solid gray";
+            div.style.borderRadius = "60px";
+            
+            div.style.position = "absolute";
+            content.appendChild(div);
+        }
+
+        // 문서가 로드된 이후에 작업을 진행하자
+        addEventListener("load", function(){
+            init();
+        })
+        // content 요소에 대해 마우스 움직임 이벤트 연결하기 
+
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="content">
+        </div>
+        <div id="aside">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 550px;
+            margin: auto;
+        }
+        #aside{
+            width: 120px;
+            height: 100%;
+            background-color: rgb(17, 4, 26);
+            float: left;
+
+            text-align: center;  /*내부 컨텐츠 수평 정렬, 수직 정렬은 align-content*/
+            overflow: scroll;
+            scrollbar-color: red;
+        }
+        #content{
+            width: 580px;
+            height: 100%;
+            background-color: rgb(252, 249, 255);
+            float: left;
+
+            text-align: center;
+            align-content: center;
+        }
+
+        #content img{
+            width: 50%;
+            
+            
+        }
+
+        #aside img{
+            width: 100px;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        //태그로 이미지를 일일이 작성하지 말고 (=정적코드), 프로그램 실행시 
+        // 즉 동적으로 이미지를 생성하여 aside의 자식 요소로 붙이자 
+        function createThumb(){
+            for(let i = 0; i < 9; i++){
+                let img = document.createElement("img");
+                img.src=`../../images/geographic/animal${i+1}.jpg`;
+
+                // JS로 이미지에 클릭 이벤트 연결 
+                img.addEventListener("click", function(){
+                    console.log("이미지 경로", this.src);
+                    document.querySelector("#content img").src=this.src;
+                });
+
+                let aside = document.getElementById("aside");
+                aside.appendChild(img);  
+            }
+
+        }
+
+        
+
+
+
+
+        // 이벤트 핸들러 구현을 태그에 직접 작성하는 방법도 있지만,
+        // js의 프로그래밍적 방법으로 이벤트를 연결하는 방법도 있다
+        // 이벤트를 감지한다.  on은 제외하고 작성
+        // addEventListener("이벤트명", "이벤트가 발생하면 호출할 함수()");
+        // 만약 호출되는 함수가 재사용성이 없을경우 익명함수로 처리한다. function(){}
+    
+        addEventListener("load", function() {
+            createThumb();   // 썸네일 생성하기
+        });
+
+    </script>
+</head>
+
+<body>
+    <button id="btn" onclick="document.getElementById('btn').innerText='버튼'">hi</button>
+    
+    <div id="wrapper">
+        <div id="aside">
+
+        </div>
+        <div id="content"><img></div>
+    </div>
+
+</body>
+</html>
+
+<!-- 이벤트핸들러를 태그에 직접 쓰는게 안좋은 이유
+  디자인 영역과 코드 영역이 섞여서 디자인이 없어지면 사라질 수도 있고...등등 -->
