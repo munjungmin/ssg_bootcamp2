@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #stage{
+            width: 700px;
+            height: 400px;
+            background-color: beige;
+            position: relative;
+        }
+    </style>
+
+    <script>
+        let rect;
+        let x = 0;
+        let flag = true;
+        let autoFlag = false;
+        // js는 2가지 플랫폼으로 개발할 수 있다. 
+        // 1. 브라우저 기반 (최상위객체: window = 브라우저)  
+        // 2. Node.js 기반 (최상위객체: global)
+        function createRect(){
+            rect = document.createElement("div");
+            rect.style.width = 30 + "px";
+            rect.style.height = 30 + "px";
+            rect.style.background = "red";
+            rect.style.borderRadius = 50 + "%";
+
+            rect.style.position = "absolute";
+            rect.style.left = 0 + "px";
+            rect.style.top = 100 + "px";
+            
+            let stage = document.getElementById("stage");
+            stage.appendChild(rect);
+        }
+
+        function move(){
+            // 문서 내의 rect라는 요소에 적용된 css 중 left 값을 증가시키다가 일정시점에 도달하면 방향 전환
+            if(flag){ 
+                x += 5;
+            }else{
+                x -= 5;
+            }
+
+            rect.style.left = x + "px";
+
+            if(x >= 700 || x <= 0) {
+                flag = !flag;
+            }
+        }
+
+        function auto(){
+            // 자동이란 이미 작성된 수동 코드를 컴퓨터에게 맡기는 행위
+            if(autoFlag){
+                move();
+            }
+        }
+
+        window.addEventListener("load", function(){
+            createRect();
+
+            // 각 버튼들의 event 연결하기
+            document.querySelector("button:nth-child(1)").addEventListener("click", function(){
+                move();
+            });
+            document.querySelector("button:nth-child(2)").addEventListener("click", function(){
+                autoFlag = !autoFlag;
+            });
+            
+            // 멈추지 않는 루프를 하나 실행시키자, setTimeout()은 지정된 시간이 흐르고나서 함수를 호출한 다음에 자동 소멸하지만, 
+            // setInterval()은 지정된 시간 간격으로 끝없이 지정된 함수를 호출하는 루프
+
+            // auto()를 브라우저 실행과 동시에 실행시켜놓고, auto()안에서 move()를 실행할지 말지를 결정하는것.
+            // setInterval()은 여러개 만들지 말고 한개만...
+            setInterval("auto()", 10);
+        });
+    </script>
+
+</head>
+<body>
+    <button>Manual</button>
+    <button>Auto</button>
+
+    <div id="stage"></div>
+</body>
+</html>
