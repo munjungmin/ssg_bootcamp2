@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            border-radius: 10px;
+        }
+        #wrapper{
+            width: 400px;
+            height: 550px;
+            /* background-color: red; */
+            margin: auto;
+        }
+        #content{
+            width: 100%;
+            height: 300px;
+            background-color: rgb(250, 250, 205);
+            font-size: 80px;
+            font-weight: bold;
+            text-align: center;
+            align-content: center;
+        }
+        #input_area {
+            width: 100%;
+            height: 100px;
+            background-color: rgb(178, 197, 95);
+        }
+        #input_area input{
+            width: 99%;
+            height: 98%;
+            background-color: rgb(178, 197, 95);
+            border: 0px;
+            font-size: 50px;
+        }
+        
+        #feedback{
+            width: 100%;
+            height: 100px;
+            background-color: rgb(81, 177, 62);
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            align-content: center;
+            color: rgb(187, 36, 36);
+
+        }
+        #score{
+            width: 100%;
+            height: 50px;
+            background-color: rgb(9, 97, 6);
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            align-content: center;
+        }
+
+    </style>
+    <script>
+        let words = [
+            "마우스",
+            "태풍",
+            "말레이시아",
+            "저녁",
+            "우주정거장",
+            "벌레",
+            "폭포",
+            "휴지",
+            "구름",
+            "건물"
+        ];
+
+        let content;
+        let input;
+        let feedback;
+        let score;
+        let n = 0; // words index 
+        let myScore = 0; 
+
+        //단어를 출력하는 함수
+        function printWord(){
+            if(n >= words.length) {
+                content.innerText = " score: " + myScore;
+                input.disabled = true;
+                input.placeholder = "게임종료";
+            } else {
+                content.innerText = words[n];
+            }
+        }
+
+        // 이 함수를 호출하면 다음 단어가 나옴
+        function next(){
+            n++;
+            printWord();
+        }
+
+        // 점수 계산 및 출력
+        function printScore(){
+            score.innerText = "score: " + myScore;
+        }
+
+        function init(){
+            content = document.getElementById("content");
+            input = document.querySelector("#input_area input");
+            feedback = document.getElementById("feedback");
+            score = document.getElementById("score");
+
+            //텍스트 박스에 키이벤트 연결
+            input.addEventListener("keyup", function(e){
+                if(e.keyCode == 13){ // 엔터키를 눌렀다면
+                    if(content.innerText == input.value){
+                        myScore += 10;
+                        printScore();
+                        next();
+                        feedback.innerText = "O";
+                    } else{
+                        feedback.innerText = "X";
+                    }
+                    input.value="";
+                }
+            });
+            printWord();
+            printScore();
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="content"></div>
+        <div id="input_area"><input type="text" placeholder="정답을 입력하세요"></div>
+        <div id="feedback"></div>
+        <div id="score"></div>
+    </div>
+</body>
+</html>
+
+<!-- sqlplus : DB 접속 클라이언트 -->
+<!-- sys/ as sysdba -->
+

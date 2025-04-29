@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 500px;
+            height: 390px;
+            margin: auto;
+            position: relative;
+            border : 3px solid orange;
+        }
+        
+        #mask{
+            width: 500px;
+            height: 340px;
+            background-color: yellow;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #footer{
+            width: 100%;
+            height: 50px;
+            background-color: lightyellow;   
+            border-left : 2px solid red; 
+            border-right : 2px solid red; 
+            border-bottom : 2px solid red; 
+            position: absolute;    
+            box-sizing: border-box;  
+        }
+
+        #footer div{
+            width: 30px;
+            height: 30px;
+            background-color: orange;
+            border-radius: 50%;
+            float: left; 
+            /* 띄워놓은 블락은 margin, padding을 적용해도 박스크기에 영향을 주지 못한다.  */
+            /* float으로 띄워놓으면 그 요소는 normal position을 벗어났기 때문 */
+            margin-left: 10px;
+        }
+
+        #footer div:hover{
+            background-color: lightgray;
+        }
+    </style>
+
+    <script>
+        // 슈렉 이미지 7개 생성, 7개 이미지를 담을 바깥쪽 부모인 box 생성 후 mask의 자식으로 부착
+        let box;
+        let a = 0.05;
+        let n = 0;
+        let imgArr = [
+            "img0.jpg",
+            "img1.jpg",
+            "img2.jpg",
+            "img3.jpg",
+            "img4.jpg",
+            "img5.jpg",
+            "img6.jpg"
+        ];
+
+        function createImg(){
+            box = document.createElement("div");
+            box.style.background = "green";
+            box.style.width = 500 * (imgArr.length) + "px";
+            box.style.height = 340 + "px";
+            
+            box.style.position = "absolute";
+            box.style.left = 0 + "px";
+
+            //box안에 슈렉 이미지 부착
+            for(let i = 0; i < imgArr.length; i++){
+                let img = document.createElement("img");
+                img.src = "../../images/shurek/" + imgArr[i];
+                img.style.position = "absolute"; // 부모인 box를 기준으로 배치할 예정
+                img.style.left = 500 * i + "px";
+    
+                box.appendChild(img); 
+            }
+            let mask = document.getElementById("mask");
+            mask.appendChild(box);
+        }
+
+        // 사용자가 선택한 번째의 슈렉이미지 box의 값을 위치시키기...
+        //0번째: 0px, 1번째: -500px, 2번째: -1000px
+        function move(){
+            box.style.left = parseFloat(box.style.left) + a * ((-500 * n) - parseFloat(box.style.left)) + "px";
+        }
+
+        function createControl(){
+            let footer = document.getElementById("footer");
+            for(let i = 0; i < imgArr.length; i++){
+                let dot = document.createElement("div");
+
+                dot.addEventListener("mouseover", function(){
+                    n = i;
+                })
+                
+                dot.style.left = i * (40) + "px";
+                dot.style.position = "absolute";
+                footer.appendChild(dot);
+            }
+        }
+
+        function gameLoop(){
+            move();
+        }
+        addEventListener("load", function(){
+            createImg(); // 슈렉이미지 생성
+            createControl();  // 이미지 컨트롤러 생성 
+            setInterval("gameLoop()", 10);
+        });
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <div id="mask"></div>
+        <div id="footer">
+
+        </div>
+    </div>
+</body>
+</html>
