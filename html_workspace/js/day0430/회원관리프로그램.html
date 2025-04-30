@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1000px;
+            height: 600px;
+        }
+
+        #aside1{
+            width: 200px;
+            height: 100%;
+            float: left;
+            background-color: yellow;
+            text-align: center;
+        }
+
+        #section{
+            width: 600px;
+            height: 100%;
+            float: left;
+        }
+
+        #header{
+            width: 100%;
+            height: 50px;
+            background-color: aqua;
+        }
+
+        #content{
+            width: 100%;
+            height: 550px;
+            background-color: beige;
+        }
+
+        #aside2{
+            width: 200px;
+            height: 100%;
+            float: left;
+            background-color: green;
+        }
+
+        form input{
+            height: 35px;
+            margin: 2px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+        }
+        table{
+            /* border-collapse: collapse; */
+        }
+    </style>
+    <script>
+        let memberArray = []; //비어있는 1차원 배열을 선언하자
+        let content; // 회원 목록 table이 출력되는 영역
+        let currentIndex; //현재 내가 선택한 층 
+
+        function init(){
+            content = document.getElementById("content");
+        }
+
+        //동적으로 테이블을 출력해보자
+        function printTable(){
+            let tag = "<table border='1px' width='100%'>";
+            tag = tag + "<tr align='center'>";
+            tag = tag + "<td>EMPNO</td>";
+            tag = tag + "<td>ENAME</td>";
+            tag = tag + "<td>SAL</td>";
+            tag = tag + "<td>COMM</td>";
+            tag = tag + "</tr>";
+
+            //실제 사원 데이터 출력 영역
+            for(let i=0; i < memberArray.length; i++){
+                tag = tag + `<tr align='center' onClick=\"getDetail(${i})\" onMouseOver=\"this.style.background='white'\" onMouseOut=\"this.style.background='beige'\">`;
+                for(let j = 0; j < memberArray[i].length; j++){
+                    tag = tag + `<td>${memberArray[i][j]}</td>`;
+                }
+                tag = tag + "</tr>";
+            }
+            //레코드 수 출력
+            tag = tag + "<tr>";
+            tag = tag + "<td colspan='5' align='right'>" + memberArray.length +"</td>";
+            tag = tag + "</tr>";
+
+            tag = tag + "</table>";
+            content.innerHTML = tag;
+        }
+
+        // 선택한 사원 정보 수정 후 테이블 갱신
+        function edit(){
+           memberArray[currentIndex][0] = form2.empno.value;
+           memberArray[currentIndex][1] = form2.ename.value;
+           memberArray[currentIndex][2] = form2.sal.value;
+           memberArray[currentIndex][3] = form2.comm.value;
+            printTable();
+        }
+
+        // 사원 한명 삭제
+        function del(){
+            memberArray.splice(currentIndex, 1);
+            printTable();
+        }
+
+        
+        function getDetail(index){
+            // index는 층수이므로, memberArray 배열에 접근할 수 있다.
+            currentIndex = index; // 현재 누른 사원이 누구인지 다른 함수에서도 알기 위해서 전역변수로 사용 
+            form2.empno.value = memberArray[index][0];
+            form2.ename.value = memberArray[index][1];
+            form2.sal.value = memberArray[index][2];
+            form2.comm.value = memberArray[index][3];
+        }
+
+        // 메모리데이터에 사원 한명 등록하기
+        function regist(){
+            //사원 한 명은 하나의 일차원 배열에 담을 수 있으므로, 일차원 배열 생성하자
+            let member = new Array();
+            member.push(form1.empno.value); 
+            member.push(form1.ename.value); 
+            member.push(form1.sal.value); 
+            member.push(form1.comm.value); 
+
+            memberArray.push(member);
+            alert("가입을 축하합니다.");
+            // 등록 초기화(기존 입력값들을 clear)
+            form1.reset();
+        }
+
+
+        addEventListener("load", function(){
+            init();
+            printTable();
+            
+            //문서 로드 시, 커서를 좌측 입력 상단에 놓아주는 
+            form1.empno.focus(); 
+            
+            //등록 버튼에 클릭이벤트 연결
+            let bt_regist = document.querySelector("#aside1 input[type='button']");
+            bt_regist.addEventListener("click", function(){
+                regist();
+                printTable();
+            });
+
+            form2.bt_del.addEventListener("click", function(){
+                if(confirm("삭제하시겠습니까?")){
+                    if(currentIndex == undefined){ // 사원을 선택한 적이 없는 경우 
+                        alert("삭제할 사원을 선택하세요");
+                    }else{
+                        del();
+                    }
+                }
+            });
+
+            form2.bt_edit.addEventListener("click", function(){
+                if(confirm("수정하시겠습니까?")){
+                    edit();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside1">
+            <!-- 입력 양식 구성 -->
+            <!-- form 태그는 말그대로 양식, 즉 제출 양식을 작성하기 위한 태그이며, 눈에 보여지지않음, 
+                주 용도는 전송 범위를 설정 
+            -->
+            <form name="form1">
+                <input type="text" name="empno" placeholder="사원번호">
+                <input type="text" name="ename" placeholder="사원명">
+                <input type="text" name="sal" placeholder="급여">
+                <input type="text" name="comm" placeholder="커미션">
+                <input type="button" value="사원등록">
+            </form>
+        </div>
+        <div id="section">
+            <div id="header">
+            </div>
+            <div id="content"></div>
+        </div>
+        <div id="aside2">
+            <form name="form2">
+                <input type="text" name="empno" placeholder="사원번호">
+                <input type="text" name="ename" placeholder="사원명">
+                <input type="text" name="sal" placeholder="급여">
+                <input type="text" name="comm" placeholder="커미션">
+                <input type="button" name="bt_edit" value="사원수정">
+                <input type="button" name="bt_del" value="사원삭제">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<!-- 클릭한 사원 영역만  색으로 강조하기-->
+<!-- header에 select, 검색, 버튼넣기  -->
+

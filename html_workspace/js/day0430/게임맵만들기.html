@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #stage{
+            width: 1200px;
+            height: 1000px;
+            background-image: url(../../images/gamemap/BG.png);
+            background-size: 1200px 1000px;
+            margin: auto;
+            position: relative;
+        }
+    </style>
+
+    <script>
+        let stage;
+        const tree = 1; 
+        const brick = 2;
+        const box = 3;
+
+        //stage에 올려질 물체의 좌표를 결정할 표(이차원배열) 선언
+        // 한 sector = 60 * 50 
+        // left는 호수가 결정하고 top은 층수가 결정함
+        let map = [
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        ];
+
+
+        //게임에 등장할 객체들을 화면에 생성 및 부착하기 위한 함수 
+        function createObject(){
+            for(let i = 0; i < map.length; i++){ //층수
+                for(let j = 0; j < map[i].length; j++){ //호수
+                    if(map[i][j] != 0){ // map의 각 요소에서 추출된 값이 0이 아니면.. 
+                        let img = document.createElement("img");
+                        let src; 
+
+                        switch(map[i][j]){
+                            case tree: src = "../../images/gamemap/Tree.png"; break;
+                            case brick: src = "../../images/gamemap/StoneBlock.png"; break;
+                            case box: src = "../../images/gamemap/Crate.png"; break;
+                        }
+
+                        img.src = src;
+                        img.style.width = 50 + "px";
+                        img.style.height = 50 + "px";
+                        img.style.position = "absolute";
+                        img.style.left = j * 50 + "px";
+                        img.style.top = i * 60 + "px";
+                        stage.appendChild(img);
+                    }
+                }
+            }
+        }
+        function init(){
+            stage = document.getElementById("stage");
+            createObject();
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="stage"></div>
+</body>
+</html>
