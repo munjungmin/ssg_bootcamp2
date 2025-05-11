@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let arrowList = []; // 화살을 무수히 담게 될 배열
+
+        class Arrow{
+            //js는 클래스가 보유한 변수는 반드시 생성자 내에서 작성해야 하고, 변수 앞에 this를 명시해야함
+            constructor(){
+                this.span = document.createElement("span");  // inline : 너비,높이,마진,패딩 조정 불가
+                this.x = 0;      //화살 좌표
+                this.velX = 5;   //화살 속도
+
+                //style
+                this.span.innerText = "→";
+                this.span.style.position = "absolute";
+                this.span.style.left = this.x + "px";
+                this.span.style.top = 100 + "px";
+                this.span.style.fontSize = 20 + "px";
+                this.span.style.color = "red";
+
+                document.body.appendChild(this.span);
+            }
+
+            move(){
+                this.x = this. x + this.velX;
+                this.span.style.left = this.x + "px";
+            }
+        }
+
+        function gameLoop(){
+            for(let i = 0; i < arrowList.length; i++){
+                arrowList[i].move();
+            }
+        }
+
+        addEventListener("load", function(){
+            setInterval(gameLoop, 10);
+        })
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

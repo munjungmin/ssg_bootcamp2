@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/Rect2.js"></script>
+    <script>
+        let width = 20;
+        let height = 1;
+        let count = 60;
+        let colorArray=["red","orange","yellow","lightgreen","skyblue","purple", "pink", "coral"];
+        let rectArray = [];
+
+        let init = function(){
+            let wrapper = document.createElement("div");
+            wrapper.style.width = width * count + "px";
+            wrapper.style.height = height + "px";
+            wrapper.style.margin = "auto";
+            wrapper.style.background = "lightgray";
+            wrapper.style.position = "relative";
+            wrapper.style.transform = "scaleY(-1)";
+            wrapper.style.top = 600 + "px";
+
+            document.body.appendChild(wrapper);
+
+            for(let i = 0; i < count; i++){
+                let bg = colorArray[parseInt(Math.random() * colorArray.length)];
+
+                let rect = new Rect2(wrapper, i * width, 0, width, height, bg);
+                rectArray.push(rect);
+            }
+        }
+
+        function gameLoop(){
+            rectArray[parseInt(Math.random() * rectArray.length)].targetH = Math.random() * 450;
+        }
+
+        addEventListener("load", function(){
+            init();
+            setInterval(gameLoop, 1);
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
+

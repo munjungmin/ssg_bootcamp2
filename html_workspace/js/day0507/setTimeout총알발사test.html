@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/Bullet2.js"></script>
+    <script>
+        
+        let colorArray = ["red","orange","yellow","green","blue","navy","purple"];
+
+        function createBullet(){
+            let color = colorArray[parseInt(Math.random() * colorArray.length)];
+            let y = parseInt(Math.random() * 800);
+
+            let bullet = new Bullet(color, y);
+            bullet.move();
+        }        
+
+        addEventListener("load", function(){
+            let bt = document.querySelector("button");
+
+            bt.addEventListener("click", function(){
+                createBullet();
+            });
+
+            //setInterval(gameLoop, 10);
+        })
+    </script>
+</head>
+<body>
+    <button>발사</button>
+</body>
+</html>

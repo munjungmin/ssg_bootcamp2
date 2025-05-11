@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/Rect.js"></script>
+    <script>
+
+        let width = 20;
+        let height = 10;
+        let count = 15;
+        let colorArray = ["red", "orange", "yellow", "lightgreen", "blue", "navy", "purple"];
+
+        let test = () => {
+            //화살표 함수 내에서의 this는 상위 스코프(영역)을 가리킴
+            console.log("나 호출했어?", this);
+        }
+
+        /**
+         * js는 함수를 일급시민(first-class citizen) 취급
+         * 컴퓨터 공학에서 일급시민이란 어떤 대상을 일반 데이터처럼 취급할 수 있는 것을 의미 
+         * 즉 js는 함수를 변수에 담거나 매개변수로 전달하거나, 리턴도 할 수 있다.
+         */
+
+        //wrapper의 크기는 결정된 것이 아니라, 자식의 크기와 수에 따라 동적으로 결정
+        let init = function(){
+            let wrapper = document.createElement("div");
+            wrapper.style.width = width * count + "px";
+            wrapper.style.height = height + "px";
+            wrapper.style.margin = "auto";
+            wrapper.style.background = "lightgray";
+            wrapper.style.position = "relative";
+
+            document.body.appendChild(wrapper);
+
+            for(let i=0; i < count; i++){
+                let bg = colorArray[parseInt(Math.random() * colorArray.length)];
+                new Rect(wrapper, i * width, 0, width, height, bg);
+            }
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+
+
