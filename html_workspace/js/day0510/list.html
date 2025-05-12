@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        // 새 창을 띄우는건 옛날 기술임 
+        // 새 창이 어미창에 접근하는건 많이 없음 let말고 var를 사용해야됨.
+        // 나중엔 db 연동할거라 이런식으로 안쓰고 좋은 방식도 아니다
+        
+        //alert("나를 생성시킨 오프너의 변수값은 " + window.opener.x);
+
+        //등록 시 누적된 맛집들의 리스트를 테이블로 동적 출력
+        function printTable(){
+            let tag = "<table width='100%' border='1px'>";
+
+            tag += "<tr>";
+            tag += "<td>No</td>";
+            tag += "<td>상호명</td>";
+            tag += "<td>연락처</td>";
+            tag += "<td>위도 경도</td>";
+            tag += "<td>대표사진</td>";
+            tag += "</tr>";
+            
+            for(let i=0; i < window.opener.storeList.length; i++){
+                let store = window.opener.storeList[i];
+                tag += "<tr>";
+                tag += `<td>${i+1}</td>`;
+                tag += `<td>${store.store_name}</td>`;
+                tag += `<td>${store.tel}</td>`;
+                tag += `<td>${store.pos}</td>`;
+                tag += `<td>대표사진</td>`;
+                tag += "</tr>";
+            }
+            
+            tag += "</table>";
+            document.body.innerHTML=tag;
+        }
+
+        addEventListener("load", function(){
+            printTable();
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
