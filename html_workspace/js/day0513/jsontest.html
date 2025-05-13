@@ -1,0 +1,33 @@
+<script>
+    /**
+     * JSON은 프로그래밍 언어가 아니라, 단순 문자열이다.
+     * 단, js의 객체 표기법을 차용한 것 뿐이다.
+     */
+
+    // 아래 코드는 js 입장에서는 문자열 {"name":"철수","age":30,"hasCar":false} 에 불과하므로, 
+    // 내부 데이터에 접근할 방법이 없다. 구조화 되어있지 않아서.
+    // 따라서 json 문자열을 프로그래밍 언어에서 사용하려면 해석작업이 선행되어야 한다. 
+    // 이를 파싱(Parsing)이라 한다. 
+    // js 내장 객체 중 json 내장 객체는 json 문자열을 객체로 자동변환하거나, 객체리터럴로 된 실제 객체를 json 문자열로 변환한다. 
+
+    let man1= "{";
+    man1 += "\"name\":\"철수\",";
+    man1 += "\"age\":30,";
+    man1 += "\"hasCar\":false";
+    man1 += "}";
+    console.log(man1);
+    
+    let obj = JSON.parse(man1);  // 파싱 후, 객체리터럴 반환
+    console.log(obj);
+    console.log(obj.name);
+    console.log(obj.age);
+
+
+    let man = {
+        name: "철수",
+        age: 30,
+        hasCar: false
+    };
+
+
+</script>

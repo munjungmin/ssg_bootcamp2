@@ -1,0 +1,34 @@
+{
+    "storeList": [
+        {
+            "store_name": "김밥천국",
+            "tel": "010-2324-2553",
+            "pos": "35.2222, 34,6666",
+            "iconImg": "../../images/marker/beer.png"
+        }, 
+        {
+            "store_name": "어여곰탕",
+            "tel": "010-2324-1111",
+            "pos": "35.2222, 70,7666",
+            "iconImg": "../../images/marker/chicken.png"
+        }, 
+        {
+            "store_name": "보름쇠",
+            "tel": "010-2324-2222",
+            "pos": "37.50934, 127.0566",
+            "iconImg": "../../images/marker/wine.png"
+        }, 
+        {
+            "store_name": "농민백암순대",
+            "tel": "010-2324-3333",
+            "pos": "37.50385, 127.0530",
+            "iconImg": "../../images/marker/chicken.png"
+        }, 
+        {
+            "store_name": "카페 윱",
+            "tel": "010-2324-4444",
+            "pos": "37.51040, 127.0525",
+            "iconImg": "../../images/marker/coffee.png"
+        }
+    ]
+}
