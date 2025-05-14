@@ -1,0 +1,90 @@
+SQL> conn java/1234;
+Connected.
+SQL> --ERD를 참고하여 테이블 생성하기
+SQL> --E(Entity) R(Relation) D(Diagram) = 개체관계도
+SQL> -- 현재 테이블 확인하기
+SQL> select table_name from user_tables;
+
+TABLE_NAME                                                                      
+------------------------------------------------------------                    
+DEPT                                                                            
+EMP                                                                             
+CUSTOMER                                                                        
+
+SQL> --반려동물의 주인 만들기
+SQL> create table owner(
+  2  owner_id number primary key
+  3  , owner_name varchar2(20)
+  4  , phone varchar2(20)
+  5  );
+
+Table created.
+
+SQL> --주인 테이블의 pk값을 자동 증가시켜줄 시퀀스 생성
+SQL> create sequence seq_owner
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> create table animaltype(
+  2  animaltype_id number primary key
+  3  , type_name varchar2(25)
+  4  );
+
+Table created.
+
+SQL> create sequence seq_animaltype
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> create table pet(
+  2  pet_id number primary key
+  3  , pet_name varchar2(20)
+  4  , age number
+  5  , owner_id number
+  6  , animaltype_id number
+  7  , constraint fk_owner_pet foreign key(owner_id) references owner(owner_id)
+  8  , constraint fk_animaltype_pet foreign key(animaltype_id) references animaltype(animaltype_id)
+  9  );
+
+Table created.
+
+SQL> create sequence seq_pet
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> select table_name from user_tables;
+
+TABLE_NAME                                                                      
+------------------------------------------------------------                    
+DEPT                                                                            
+EMP                                                                             
+CUSTOMER                                                                        
+OWNER                                                                           
+ANIMALTYPE                                                                      
+PET                                                                             
+
+6 rows selected.
+
+SQL> select table_name from user_sequences;
+select table_name from user_sequences
+       *
+ERROR at line 1:
+ORA-00904: "TABLE_NAME": invalid identifier 
+
+
+SQL> select sequence_name from user_sequences;
+
+SEQUENCE_NAME                                                                   
+------------------------------------------------------------                    
+SEQ_ANIMALTYPE                                                                  
+SEQ_CUSTOMER                                                                    
+SEQ_OWNER                                                                       
+SEQ_PET                                                                         
+
+SQL> spool off

@@ -1,0 +1,588 @@
+SQL> --sqlplus 명령어 중 한페이지당 몇개의 레코드를 수용할지를 결정하는 툴 명령어
+SQL> set pagesize 20
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                                                                                                                         
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                                                                                                                         
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                                                                                                                         
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                                                                                                                         
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                                                                                                                         
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                                                                                                                         
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                                                                                                                         
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                                                                                                                         
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                                                                                                                         
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                                                                                                                         
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                                                                                                                         
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                                                                                                                         
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                                                                                                                         
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                                                                                                                         
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                                                                                                                         
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                                                                                                                         
+
+14 rows selected.
+
+SQL> --테이블의 데이터가 아니라 테이블의 구조를 보는 방법
+SQL> desc emp;
+ Name                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMPNO                                                                                                                                                                                                                                     NOT NULL NUMBER
+ ENAME                                                                                                                                                                                                                                              VARCHAR2(10)
+ JOB                                                                                                                                                                                                                                                VARCHAR2(9)
+ MGR                                                                                                                                                                                                                                                NUMBER
+ HIREDATE                                                                                                                                                                                                                                           DATE
+ SAL                                                                                                                                                                                                                                                NUMBER
+ COMM                                                                                                                                                                                                                                               NUMBER
+ DEPTNO                                                                                                                                                                                                                                             NUMBER
+
+SQL> set line 200
+SQL> desc emp;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPNO                                                                                                             NOT NULL NUMBER
+ ENAME                                                                                                                      VARCHAR2(10)
+ JOB                                                                                                                        VARCHAR2(9)
+ MGR                                                                                                                        NUMBER
+ HIREDATE                                                                                                                   DATE
+ SAL                                                                                                                        NUMBER
+ COMM                                                                                                                       NUMBER
+ DEPTNO                                                                                                                     NUMBER
+
+SQL> col tname format a50
+SQL> desc emp;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPNO                                                                                                             NOT NULL NUMBER
+ ENAME                                                                                                                      VARCHAR2(10)
+ JOB                                                                                                                        VARCHAR2(9)
+ MGR                                                                                                                        NUMBER
+ HIREDATE                                                                                                                   DATE
+ SAL                                                                                                                        NUMBER
+ COMM                                                                                                                       NUMBER
+ DEPTNO                                                                                                                     NUMBER
+
+SQL> col name format a20;
+SQL> desc emp;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPNO                                                                                                             NOT NULL NUMBER
+ ENAME                                                                                                                      VARCHAR2(10)
+ JOB                                                                                                                        VARCHAR2(9)
+ MGR                                                                                                                        NUMBER
+ HIREDATE                                                                                                                   DATE
+ SAL                                                                                                                        NUMBER
+ COMM                                                                                                                       NUMBER
+ DEPTNO                                                                                                                     NUMBER
+
+SQL> desc dept;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPTNO                                                                                                            NOT NULL NUMBER
+ DNAME                                                                                                                      VARCHAR2(14)
+ LOC                                                                                                                        VARCHAR2(13)
+
+SQL> --현재 계정이 보유한 테이블 조회
+SQL> --딕셔너리 조회
+SQL> select table_name from user_tables;
+
+TABLE_NAME                                                                                                                                                                                              
+------------------------------------------------------------                                                                                                                                            
+DEPT                                                                                                                                                                                                    
+EMP                                                                                                                                                                                                     
+CUSTOMER                                                                                                                                                                                                
+OWNER                                                                                                                                                                                                   
+ANIMALTYPE                                                                                                                                                                                              
+PET                                                                                                                                                                                                     
+
+6 rows selected.
+
+SQL> --보유한 시퀀스들을 조회
+SQL> select sequence_name from user_sequences;
+
+SEQUENCE_NAME                                                                                                                                                                                           
+------------------------------------------------------------                                                                                                                                            
+SEQ_ANIMALTYPE                                                                                                                                                                                          
+SEQ_CUSTOMER                                                                                                                                                                                            
+SEQ_OWNER                                                                                                                                                                                               
+SEQ_PET                                                                                                                                                                                                 
+
+SQL> --동물 정보를 입력한다
+SQL> desc animal;
+ERROR:
+ORA-04043: object animal does not exist 
+
+
+SQL> desc animaltype;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ANIMALTYPE_ID                                                                                                     NOT NULL NUMBER
+ TYPE_NAME                                                                                                                  VARCHAR2(25)
+
+SQL> insert into animaltype(animaltype_id, type_name) values(seq_animaltype.nextval, '원숭이');
+
+1 row created.
+
+SQL> select * from animaltype;
+
+ANIMALTYPE_ID TYPE_NAME                                                                                                                                                                                 
+------------- --------------------------------------------------                                                                                                                                        
+            1 원숭이                                                                                                                                                                                    
+
+SQL> insert into animaltype(animaltype_id, type_name) values(seq_animaltype.nextval, '개');
+
+1 row created.
+
+SQL> insert into animaltype(animaltype_id, type_name) values(seq_animaltype.nextval, '고양이');
+
+1 row created.
+
+SQL> select * from animaltype;
+
+ANIMALTYPE_ID TYPE_NAME                                                                                                                                                                                 
+------------- --------------------------------------------------                                                                                                                                        
+            1 원숭이                                                                                                                                                                                    
+            2 개                                                                                                                                                                                        
+            3 고양이                                                                                                                                                                                    
+
+SQL> desc owner;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ OWNER_ID                                                                                                          NOT NULL NUMBER
+ OWNER_NAME                                                                                                                 VARCHAR2(20)
+ PHONE                                                                                                                      VARCHAR2(20)
+
+SQL> insert into owner(owner_id, owner_name, phone) values(seq_owner.nextval, 'Adams', '010-2222-3333');
+
+1 row created.
+
+SQL> insert into owner(owner_id, owner_name, phone) values(seq_owner.nextval, 'Scott', '010-4444-3333');
+
+1 row created.
+
+SQL> insert into owner(owner_id, owner_name, phone) values(seq_owner.nextval, 'King', '010-8888-3333');;
+insert into owner(owner_id, owner_name, phone) values(seq_owner.nextval, 'King', '010-8888-3333');
+                                                                                                 *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> insert into owner(owner_id, owner_name, phone) values(seq_owner.nextval, 'King', '010-8888-3333');
+
+1 row created.
+
+SQL> select * from owner;
+
+  OWNER_ID OWNER_NAME                               PHONE                                                                                                                                               
+---------- ---------------------------------------- ----------------------------------------                                                                                                            
+         1 Adams                                    010-2222-3333                                                                                                                                       
+         2 Scott                                    010-4444-3333                                                                                                                                       
+         3 King                                     010-8888-3333                                                                                                                                       
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc pet;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PET_ID                                                                                                            NOT NULL NUMBER
+ PET_NAME                                                                                                                   VARCHAR2(20)
+ AGE                                                                                                                        NUMBER
+ OWNER_ID                                                                                                                   NUMBER
+ ANIMALTYPE_ID                                                                                                              NUMBER
+
+SQL> insert into pet(pet_id, pet_name, age, owner_id, animaltype_id) values(seq_pet.nextval, '복돌이', 2, 1, 2);
+
+1 row created.
+
+SQL> select * from pet;
+
+    PET_ID PET_NAME                                        AGE   OWNER_ID ANIMALTYPE_ID                                                                                                                 
+---------- ---------------------------------------- ---------- ---------- -------------                                                                                                                 
+         1 복돌이                                            2          1             2                                                                                                                 
+
+SQL> --정규화에 의해 테이블 분리는 잘 시켰으나, 막상 테이블을 조회하면 fk만 보고 내용을 알수가 없다.
+SQL> -- 따라서 마치 하나의 테이블처럼 레코드를 가상으로 조회 = 조인
+SQL> select * from pet p, owner o where p.owner_id = o.owner_id;
+
+    PET_ID PET_NAME                                        AGE   OWNER_ID ANIMALTYPE_ID   OWNER_ID OWNER_NAME                               PHONE                                                       
+---------- ---------------------------------------- ---------- ---------- ------------- ---------- ---------------------------------------- ----------------------------------------                    
+         1 복돌이                                            2          1             2          1 Adams                                    010-2222-3333                                               
+
+SQL> select distinct(*) from pet p, owner o where p.owner_id = o.owner_id;
+select distinct(*) from pet p, owner o where p.owner_id = o.owner_id
+                *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select * from pet p, owner o where p.owner_id = o.owner_id distinct;
+select * from pet p, owner o where p.owner_id = o.owner_id distinct
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> desc emp;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPNO                                                                                                             NOT NULL NUMBER
+ ENAME                                                                                                                      VARCHAR2(10)
+ JOB                                                                                                                        VARCHAR2(9)
+ MGR                                                                                                                        NUMBER
+ HIREDATE                                                                                                                   DATE
+ SAL                                                                                                                        NUMBER
+ COMM                                                                                                                       NUMBER
+ DEPTNO                                                                                                                     NUMBER
+
+SQL> select count(*) from emp e, dept d
+  2  where d.deptno = (
+  3          select deptno from emp
+  4          where ename = 'SMITH';)
+  5  ;
+        where ename = 'SMITH';)
+                             *
+ERROR at line 4:
+ORA-00911: invalid character 
+
+
+SQL> select count(*) from emp e, dept d
+  2  where d.deptno = (
+  3          select deptno from emp
+  4          where ename = 'SMITH')
+  5  ;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> 
+SQL> select count(*) from emp e
+  2  where e.deptno = (
+  3          select deptno from emp
+  4          where ename = 'SMITH')
+  5  ;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+
+SQL> select d.deptno, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno;
+
+    DEPTNO DNAME                        LOC                                                                                                                                                             
+---------- ---------------------------- --------------------------                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                        
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                        
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                        
+        20 RESEARCH                     DALLAS                                                                                                                                                          
+        20 RESEARCH                     DALLAS                                                                                                                                                          
+        20 RESEARCH                     DALLAS                                                                                                                                                          
+        20 RESEARCH                     DALLAS                                                                                                                                                          
+        20 RESEARCH                     DALLAS                                                                                                                                                          
+        30 SALES                        CHICAGO                                                                                                                                                         
+        30 SALES                        CHICAGO                                                                                                                                                         
+        30 SALES                        CHICAGO                                                                                                                                                         
+        30 SALES                        CHICAGO                                                                                                                                                         
+        30 SALES                        CHICAGO                                                                                                                                                         
+        30 SALES                        CHICAGO                                                                                                                                                         
+
+14 rows selected.
+
+SQL> select * from dept d, emp e
+  2  where d.deptno = e.deptno ;
+
+    DEPTNO DNAME                        LOC                             EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                              
+---------- ---------------------------- -------------------------- ---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                              
+        10 ACCOUNTING                   NEW YORK                         7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                              
+        10 ACCOUNTING                   NEW YORK                         7839 KING                 PRESIDENT                     81/11/17       5000                    10                              
+        10 ACCOUNTING                   NEW YORK                         7934 MILLER               CLERK                    7782 82/01/23       1300                    10                              
+        20 RESEARCH                     DALLAS                           7566 JONES                MANAGER                  7839 81/04/02       2975                    20                              
+        20 RESEARCH                     DALLAS                           7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                              
+        20 RESEARCH                     DALLAS                           7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                              
+        20 RESEARCH                     DALLAS                           7369 SMITH                CLERK                    7902 80/12/17        800                    20                              
+        20 RESEARCH                     DALLAS                           7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                              
+        30 SALES                        CHICAGO                          7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                              
+        30 SALES                        CHICAGO                          7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                              
+        30 SALES                        CHICAGO                          7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                              
+        30 SALES                        CHICAGO                          7900 JAMES                CLERK                    7698 81/12/03        950                    30                              
+        30 SALES                        CHICAGO                          7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                              
+        30 SALES                        CHICAGO                          7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                              
+
+14 rows selected.
+
+SQL> select count(*)
+  2  from dept
+  3  group by deptno;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+
+SQL> select count(*)
+  2  from emp
+  3  group by deptno;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         6                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+         3                                                                                                                                                                                              
+
+SQL> select empno, ename, hiredate, d.deptno, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and hiredate > (
+  4      select hiredate from emp where ename = 'FORD'
+  5  )
+  6  order by hiredate;
+
+     EMPNO ENAME                HIREDATE     DEPTNO LOC                                                                                                                                                 
+---------- -------------------- -------- ---------- --------------------------                                                                                                                          
+      7934 MILLER               82/01/23         10 NEW YORK                                                                                                                                            
+      7788 SCOTT                87/04/19         20 DALLAS                                                                                                                                              
+      7876 ADAMS                87/05/23         20 DALLAS                                                                                                                                              
+
+SQL> select  * from emp order by hiredate;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+
+14 rows selected.
+
+SQL> select empno, ename, hiredate, d.deptno, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and hiredate < (
+  4      select hiredate from emp where ename = 'FORD'
+  5  )
+  6  order by hiredate;
+
+     EMPNO ENAME                HIREDATE     DEPTNO LOC                                                                                                                                                 
+---------- -------------------- -------- ---------- --------------------------                                                                                                                          
+      7369 SMITH                80/12/17         20 DALLAS                                                                                                                                              
+      7499 ALLEN                81/02/20         30 CHICAGO                                                                                                                                             
+      7521 WARD                 81/02/22         30 CHICAGO                                                                                                                                             
+      7566 JONES                81/04/02         20 DALLAS                                                                                                                                              
+      7698 BLAKE                81/05/01         30 CHICAGO                                                                                                                                             
+      7782 CLARK                81/06/09         10 NEW YORK                                                                                                                                            
+      7844 TURNER               81/09/08         30 CHICAGO                                                                                                                                             
+      7654 MARTIN               81/09/28         30 CHICAGO                                                                                                                                             
+      7839 KING                 81/11/17         10 NEW YORK                                                                                                                                            
+
+9 rows selected.
+
+SQL> select count(*) from emp
+  2  group by deptno;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         6                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+         3                                                                                                                                                                                              
+
+SQL> select count(*) from emp
+  2  where deptno = (select
+  3  deptno where ename = 'SMITH');
+deptno where ename = 'SMITH')
+       *
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> deptno wselect count(*) here ename = 'SMITH');
+SP2-0734: unknown command beginning "deptno wse..." - rest of line ignored.
+SQL> from emp
+SP2-0042: unknown command "from emp" - rest of line ignored.
+SQL> where deptno = (
+SP2-0734: unknown command beginning "where dept..." - rest of line ignored.
+SQL>     select deptno
+  2      from emp
+  3      where ename = 'SMITH'
+  4  );
+)
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select count(*)
+  2  from emp
+  3  where deptno = (
+  4      select deptno
+  5      from emp
+  6      where ename = 'SMITH'
+  7  );
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+
+SQL> select deptno, count(*) from emp
+  2  where count(*) > (
+  3      select count(*) from emp
+  4      group by(deptno)
+  5  );
+where count(*) > (
+      *
+ERROR at line 2:
+ORA-00934: group function is not allowed here 
+
+
+SQL> select deptno, count(*) from emp
+  2  group by deptno;
+
+    DEPTNO   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+        30          6                                                                                                                                                                                   
+        20          5                                                                                                                                                                                   
+        10          3                                                                                                                                                                                   
+
+SQL> select deptno, count(*) from emp
+  2  group by deptno;
+
+    DEPTNO   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+        30          6                                                                                                                                                                                   
+        20          5                                                                                                                                                                                   
+        10          3                                                                                                                                                                                   
+
+SQL> having count(*) > 5;
+SP2-0734: unknown command beginning "having cou..." - rest of line ignored.
+SQL> \select deptno, count(*) from emp
+SP2-0734: unknown command beginning "\select de..." - rest of line ignored.
+SQL> group by deptno;
+SP2-0734: unknown command beginning "group by d..." - rest of line ignored.
+SQL> having count(*) > 5;
+SP2-0734: unknown command beginning "having cou..." - rest of line ignored.
+SP2-0044: For a list of known commands enter HELP
+and to leave enter EXIT.
+SQL> select deptno, count(*) from emp
+  2  group by deptno;
+
+    DEPTNO   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+        30          6                                                                                                                                                                                   
+        20          5                                                                                                                                                                                   
+        10          3                                                                                                                                                                                   
+
+SQL> having count(*) > 5;select deptno, count(*) from emp
+SP2-0734: unknown command beginning "having cou..." - rest of line ignored.
+SQL> group by deptno
+SP2-0734: unknown command beginning "group by d..." - rest of line ignored.
+SQL> having count(*) > 5;
+SP2-0734: unknown command beginning "having cou..." - rest of line ignored.
+SQL> select deptno, count(*) from emp
+  2  group by deptno
+  3  having count(*) > 5;
+
+    DEPTNO   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+        30          6                                                                                                                                                                                   
+
+SQL> --1)
+SQL> select deptno, count(empno) from emp
+  2  group by deptno
+  3  having count(*) >= 5;
+
+    DEPTNO COUNT(EMPNO)                                                                                                                                                                                 
+---------- ------------                                                                                                                                                                                 
+        30            6                                                                                                                                                                                 
+        20            5                                                                                                                                                                                 
+
+SQL> select deptno, count(*) from emp
+  2  group by deptno
+  3  having count(empno) >= 5;
+
+    DEPTNO   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+        30          6                                                                                                                                                                                   
+        20          5                                                                                                                                                                                   
+
+SQL> select d.deptno, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno
+  4  group by deptno
+  5  having count(*) > (
+  6      select count(*)
+  7      from emp
+  8      where deptno = (
+  9          select deptno from emp
+ 10          where dname = 'SMITH'
+ 11      )
+ 12  );
+group by deptno
+         *
+ERROR at line 4:
+ORA-00918: column ambiguously defined 
+
+
+SQL> select d.deptno, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno
+  4  group by e.deptno
+  5  having count(*) > (
+  6      select count(*)
+  7      from emp
+  8      where deptno = (
+  9          select deptno from emp
+ 10          where dname = 'SMITH'
+ 11      )
+ 12  );
+        where dname = 'SMITH'
+              *
+ERROR at line 10:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> select d.deptno, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno
+  4  group by e.deptno
+  5  having count(*) > (
+  6      select count(*)
+  7      from emp
+  8      where deptno = (
+  9          select deptno from emp
+ 10          where ename = 'SMITH'
+ 11      )
+ 12  );
+select d.deptno, d.dname, d.loc
+       *
+ERROR at line 1:
