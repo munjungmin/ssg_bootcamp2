@@ -43,5 +43,30 @@ function getLastDate(yy, mm){
     return d.getDate();
 }
 
+/**
+ * 충돌 체크 함수
+ * 
+ */
+function collisionCheck(me, target){
+    //나에 대한 수치계산
+    let me_x = parseFloat(me.style.left);
+    let me_y = parseInt(me.style.top);
+    let me_width = parseInt(me.style.width);
+    let me_height = parseInt(me.style.height);
+
+    let target_x = parseInt(target.style.left);
+    let target_y = parseInt(target.style.top);
+    let target_width = parseInt(target.style.width);
+    let target_height = parseInt(target.style.height);
+
+    // 충돌하지 않는 경우 (b물체가 a 물체를 중심으로 상하좌우에 위치했을때 충돌하지 않을 조건)
+    return !(
+        me_x + me_width < target_x  ||  
+        me_x > target_x + target_width ||
+        me_y + me_height < target_y ||
+        me_y > target_y + target_height
+    );
+
+}
 
 
