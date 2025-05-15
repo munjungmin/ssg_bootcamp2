@@ -1,5 +1,15 @@
+/**
+ * 0~max 사이의 랜덤 정수 반환
+ */
 function getRandom(max){
     return parseInt(Math.random() * (max+1));  
+}
+
+/**
+ * 지정된 범위 사이의 랜덤 정수 반환
+ */
+function getRandomRange(min, max){
+    return parseInt(Math.random() * (max - min + 1) + min);
 }
 
 /**

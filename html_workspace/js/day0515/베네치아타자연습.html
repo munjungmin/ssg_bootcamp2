@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin-top: 0;
+        }
+        #wrapper{
+            width: 1250px;
+            height: 700px;
+            background-color: aqua;
+            margin: auto;
+        }
+        #aside{
+            width: 150px;
+            height: 100%;
+            background-color: beige;
+            float: left;
+        }
+        #aside *{
+            width: 90%;
+        }
+        #hp_wrapper{
+            width: 150px;
+            height: 150px;
+            background-color: aqua;
+            position: absolute;
+            margin-top: 10px;
+            
+        }
+
+        #content{
+            width: 1100px;
+            height: 100%;
+            background-color: navy;
+            background-image: url(../../images/image.png);
+            background-size: 1100px 700px;
+            float: left;
+            position: relative;
+        }
+        #content span{
+            background-color: yellow;
+        }
+        #stage{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../lib/common.js"></script>
+    <script src="js/Word.js"></script>
+    <script src="js/Hp.js"></script>
+    <script>
+        // script src는 js파일만 import 가능, txt메모장 데이터를 바로 사용할 수 없으므로 메모장 파일을 읽어들여
+        // JSON 문자열 파싱 후 객체로 반환받아 사용하자
+        // 단 js가 파일에 대한 접근은 크롬브라우저가 사용자에게 수락을 받은 결과를 얻어와서 처리해야함
+        // 근데 이미지 파일은 어떻게 접근한거지?... 
+        let wordArray; //프로그램이 종료될때까지 4레벨까지 게임 가능한 데이터베이스를 담고 있을 전역변수
+        let st; //setInterval(), 할당되기 전까지 undefined
+        let objWordList = []; // 단어 스트링 자체가 아니라 Word 객체 인스턴스를 담을 
+        let speed = 800;  //게임 속도를 좌우하는 변수
+        let level = 0; // objWordList의 index 
+        let hpArray = [];
+
+        function init(){
+            document.querySelector("input[type='file']").addEventListener("change", function(e){
+                loadData(e);  //loadData를 실행 후 reader가 다 읽기를 기다리면서 비동기 방식으로 실행 
+                //createWord();  // 여기에 이 함수가 있으면 비동기 방식때문에 데이터가 로드되기 전에 word를 생성하려고 해서 생성이 안된다.
+            });
+
+            document.querySelector("#aside button").addEventListener("click", function(){
+                //st = (st == undefined) ? setInterval(gameLoop, 800) : clearInterval(st);
+                if(st == undefined){
+                    st = setInterval(gameLoop, 800);
+                    this.innerText = "Pause";
+                }else{
+                    clearInterval(st);
+                    st = undefined;
+                    this.innerText = "Start";
+                }
+            });
+
+            //document.querySelector("#aside input[type='text']")
+            document.querySelector("#aside input[type='text']").addEventListener("keyup", function(e){
+                if(e.keyCode == 13){
+                    // 사용자가 입력한 단어와 화면에 생존해 있는 단어 인스턴스 내부의 text를 
+                    checkText(this.value);
+                    this.value = "";
+                }
+            });
+
+            createHp();
+        }
+
+        // 9개의 Hp 인스턴스 생성하기
+        function createHp(){
+            for(let i = 0; i < 9; i++){
+                let hp = new Hp(document.getElementById("hp_wrapper"), 0, i * 15, 100, 12, "red", "black");
+                hpArray.push(hp);
+            }
+        }
+
+        function loadData(e){
+            console.log(e);
+
+            let file = e.target.files[0];  //사용자가 선택한 파일을 가져오기만 했지, 읽진 않았음
+            let reader = new FileReader();
+            reader.onload = function(data){
+                let jsonString = data.target.result; // 메모장에 작성된 바로 그 문자열들
+                let obj = JSON.parse(jsonString);
+                for(let i = 0; i < obj.wordList.length; i++){
+                    console.log(obj.wordList[i]);
+                }
+                wordArray = obj.wordList;
+
+                createWord();  // 비동기 방식때문에 init()말고 loadData()에서 호출해 순서대로 실행
+
+                //start 버튼 활성화
+                document.querySelector("button").disabled = false;
+            }
+            reader.readAsText(file);
+        }
+
+        function createWord(){
+            let content = document.getElementById("content");
+            for(let i = 0; i < wordArray[level].length; i++){
+                let word = new Word(content, 70 + i*95, getRandomRange(-150, 10), wordArray[level][i], "red");
+                objWordList.push(word);
+            }
+        }
+
+        //단어를 모두 입력했다면 이 판을 클리어했다고 판단하여, 레벨을 올려주자
+        function checkLevel(){
+            if(objWordList.length == 0){
+                alert("Stage" + (level + 1) + " 통과!");
+                level++;
+                speed -= 200;
+                createWord();
+            }
+        }
+
+        function nextStep(){
+            //모든 단어를 대상으로 tick(), render()
+            for(let i = 0; i < objWordList.length; i++){
+                objWordList[i].tick();
+                objWordList[i].render();
+            }
+        }
+
+        function gameLoop(){
+            nextStep();
+            console.log("Loop...");
+        }
+
+        function checkText(input){  
+            console.log(input);
+            for(let i = 0; i < objWordList.length; i++){
+                if(objWordList[i].text == input){
+                    objWordList[i].span.style.color = "yellow";
+
+                    //제거 (화면제거 + 배열제거)
+                    let content = document.getElementById("content");
+                    content.removeChild(objWordList[i].span);
+
+                    objWordList.splice(i, 1);
+
+                    checkLevel();
+                }
+            }
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <input type="file">
+            <button disabled="true">Start</button>
+            <input type="text" placeholder="단어 입력">
+            <div id="hp_wrapper"></div>
+        </div>
+        <div id="content"></div>
+    </div>
+
+</body>
+</html>
