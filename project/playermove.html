@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #stage{
+            width: 1000px;
+            height: 700px;
+            background-color: yellow;
+        }
+    </style>
+    <script src="Player.js"></script>
+    <script>
+        let player;
+        let targetX, targetY;
+
+        function init(){
+            
+
+            player = new Player(document.getElementById("stage"), 100, 100, 50, 50, "red");
+            //createPlayer();
+            targetX = player.x;
+            targetY = player.y;
+
+            document.getElementById("stage").addEventListener("mousedown", function(e){
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+        }
+        
+
+        function gameLoop(){
+            player.move(targetX, targetY);
+        }
+
+        addEventListener("load", function(){
+            init();
+            setInterval(gameLoop, 10);
+        })
+    </script>
+</head>
+<body>
+    <div id="stage">
+
+    </div>
+</body>
+</html>
