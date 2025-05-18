@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q skill</title>
+     <style>
+        #stage{
+            width: 1000px;
+            height: 700px;
+            background-color: yellow;
+        }
+    </style>
+    <script src="GameObject.js"></script>
+    <script src="Player.js"></script>
+    <script src="Enemy.js"></script>
+    <script src="Projectile.js"></script>
+    <script src="../html_workspace/js/lib/common.js"></script>
+
+    <script>
+        let player;
+        let enemyArray = [];
+        let bulletArray = [];
+        let mouseX;
+        let mouseY;
+
+        function createBullet(){
+            let dx = mouseX - player.x;
+            let dy = mouseY - player.y;
+            let angle = Math.atan2(dy, dx);
+            let bullet = new Projectile(document.getElementById("stage"), player.x, player.y, 30, 30, angle, Date.now());
+            bullet.div.style.background = "red";
+            bulletArray.push(bullet);
+        }   
+
+        function init(){
+            player = new Player(document.getElementById("stage"), 100, 100, 50, 50, "blue");
+            enemy1 = new Enemy(document.getElementById("stage"), 700, 100, 50, 50, "red");
+            enemy2 = new Enemy(document.getElementById("stage"), 700, 300, 50, 50, "purple");
+            enemy3 = new Enemy(document.getElementById("stage"), 700, 500, 50, 50, "green");
+
+            enemyArray.push(enemy1);
+            enemyArray.push(enemy2);
+            enemyArray.push(enemy3);
+
+            addEventListener("keydown", function(e){
+                if(e.keyCode == 81){
+                    createBullet(); 
+                }
+            });
+            
+            addEventListener("mousemove", function(e){
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+        }
+
+        function gameLoop(){
+            for(let i = bulletArray.length - 1; i >= 0; i--){
+
+                bulletArray[i].move();
+                bulletArray[i].render();
+
+                for(let j= 0; j < enemyArray.length; j++){
+                    if(checkCollision(bulletArray[i].div, enemyArray[j].div)
+                    || (Date.now() - bulletArray[i].createdAt > bulletArray[i].lifetime))
+                    {
+                        bulletArray[i].remove();
+                        bulletArray.splice(i, 1); 
+                        break;
+                        
+                    }
+                }
+
+
+            }
+            
+        }
+
+        addEventListener("load", function(){
+            init();
+            setInterval(gameLoop, 10);
+        });
+       
+
+      
+    </script>
+</head>
+
+<body>
+    <div id="stage"></div>
+</body>
+</html>

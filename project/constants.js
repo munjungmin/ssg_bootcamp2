@@ -1,0 +1,1 @@
+const ATTACK_RANGE = 300;

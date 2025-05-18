@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>player attack</title>
+</head>
+   <style>
+        #stage{
+            width: 1000px;
+            height: 700px;
+            background-color: yellow;
+        }
+    </style>
+    <!-- <script type="module" src="constants.js"></script> -->
+    <!-- <script type="module" src="Player.js"></script> -->
+
+    <script src="Player.js"></script>
+    <script src="Enemy.js"></script>
+
+    <script>
+        let player;
+        let enemy; 
+        let playerState;
+        let targetX, targetY;
+
+        function createGameObject(){
+            player = new Player(document.getElementById("stage"), 100, 100, 50, 50, "blue");
+            enemy = new Enemy(document.getElementById("stage"), 700, 100, 50, 50, "red");
+            enemy = new Enemy(document.getElementById("stage"), 700, 300, 50, 50, "purple");
+            enemy = new Enemy(document.getElementById("stage"), 700, 500, 50, 50, "green");
+        }
+        function init(){
+           createGameObject();
+
+            document.getElementById("stage").addEventListener("mousedown", function(e){
+                player.targetX = e.clientX;
+                player.targetY = e.clientY;
+
+                if(e.target.id == 'stage'){
+                    playerState = "MOVE";
+                    player.target = null;
+                }
+                if(e.target.className == 'enemy'){
+                    playerState = "ATTACK";
+                    player.target = e.target.gameObject;   //이러면 클릭한 대상은 아니고 그냥 현재 전역으로 나와있는 적을 타겟으로 지정, 이걸 일단 바꿔야 함 
+                } 
+            });
+        }
+
+        function handleInput(){
+            switch(playerState){
+                case "MOVE": player.move(); break;
+                case "ATTACK": player.attack(); break;
+
+            }
+        }
+
+        function gameLoop(){
+            handleInput();
+        }
+
+        addEventListener("load", function(){
+            init();
+            setInterval(gameLoop, 10);
+        })
+
+
+    </script>
+<body>
+    <div id="stage"></div>
+</body>
+</html>
