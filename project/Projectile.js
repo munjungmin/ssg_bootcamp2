@@ -20,6 +20,7 @@ class Projectile extends GameObject{
         this.createdAt = createdAt;
         this.damage = 50;
         this.owner = owner;
+        
     }
 
     // 투사체 지속가능한 

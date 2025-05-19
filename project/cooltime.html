@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #tx{
+            width: 300px;
+            height: 300px;
+            background-color: yellow;
+        }
+    </style>
+    <script>
+        let cooltime = 5000;
+        let elapsedTime = 0;
+        let start;
+        function startTimer(){
+            if(document.getElementById("bt").disabled == true){
+                elapsedTime = Date.now() - start;
+                if(elapsedTime >= cooltime){
+                    document.getElementById("bt").disabled = false;
+                    start = undefined;
+                    elapsedTime = 0;
+                }
+            }
+        }
+        function render(){
+            document.getElementById("tx").innerText = parseInt((cooltime - elapsedTime)/1000);
+        }
+        function gameLoop(){
+            startTimer();
+            render();
+        }
+        addEventListener("load", function(){
+            document.getElementById("bt").addEventListener("click", function(){
+                start = Date.now();
+                this.disabled = true;
+            });
+
+            setInterval(gameLoop, 10);
+        });
+    </script>
+</head>
+<body>
+    <button id="bt">쿨타임 시작</button>
+    <div id="tx"></div>
+</body>
+</html>
