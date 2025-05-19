@@ -1,5 +1,5 @@
 class Projectile extends GameObject{
-    constructor(container, x, y, width, height, angle, createdAt){
+    constructor(container, x, y, width, height, angle, createdAt, owner){
         super(container, x, y, width, height);
 
         this.div = document.createElement("div");
@@ -18,6 +18,8 @@ class Projectile extends GameObject{
         this.angle = angle;
         this.lifetime = 1000;  //ms 단위 
         this.createdAt = createdAt;
+        this.damage = 50;
+        this.owner = owner;
     }
 
     // 투사체 지속가능한 
@@ -36,5 +38,10 @@ class Projectile extends GameObject{
         this.div.style.top = this.y + "px";
     }
 
+    onHit(target){
+        console.log(target);
+        target.hp -= this.damage;
+
+    }
 
 }

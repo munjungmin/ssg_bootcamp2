@@ -28,7 +28,7 @@
             let dx = mouseX - player.x;
             let dy = mouseY - player.y;
             let angle = Math.atan2(dy, dx);
-            let bullet = new Projectile(document.getElementById("stage"), player.x, player.y, 30, 30, angle, Date.now());
+            let bullet = new Projectile(document.getElementById("stage"), player.x, player.y, 30, 30, angle, Date.now(), player);
             bullet.div.style.background = "red";
             bulletArray.push(bullet);
         }   
@@ -62,19 +62,27 @@
                 bulletArray[i].render();
 
                 for(let j= 0; j < enemyArray.length; j++){
+
+                    //중복
+                    if(checkCollision(bulletArray[i].div, enemyArray[j].div)){
+                        bulletArray[i].onHit(enemyArray[j]);
+                        console.log(bulletArray[i].owner.gold);
+                        if(enemyArray[j].isDead()){
+                            bulletArray[i].owner.rewardGold(enemyArray[j].gold);
+                            console.log(bulletArray[i].owner.gold);
+                        }
+                        console.log(enemyArray[j].hp);
+                    }
+
                     if(checkCollision(bulletArray[i].div, enemyArray[j].div)
                     || (Date.now() - bulletArray[i].createdAt > bulletArray[i].lifetime))
                     {
                         bulletArray[i].remove();
                         bulletArray.splice(i, 1); 
                         break;
-                        
                     }
                 }
-
-
             }
-            
         }
 
         addEventListener("load", function(){

@@ -20,8 +20,15 @@ class Enemy{
         //game 
         //this.attackRange = 100;  //100px
         this.div.classList.add('enemy');
-
         this.div.gameObject = this;
 
+        this.hp = 300;
+        this.gold = 21;
+
     }
+
+    isDead(){
+        return (this.hp > 0 ? false : true);
+    }
+
 }

@@ -27,6 +27,7 @@ class Player{
         this.targetX;   //
         this.targetY;  // 이동하려는 좌표
         this.target;   // 공격하려는 대상 
+        this.gold = 0;
     }
     
     look(){
@@ -77,5 +78,10 @@ class Player{
         console.log(distance);
         return distance < this.attackRange ? true : false;        
     }
+
+    rewardGold(gold){
+        this.gold += gold;
+    }
+
 }
 
