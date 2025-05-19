@@ -1,0 +1,56 @@
+#wrapper{
+    width: 700px;
+    height: 690px;
+    background-color: rgb(132, 180, 36);
+    margin: auto;
+}
+#header{
+    height: 50px;
+    background-color: rgb(233, 240, 226);
+    line-height: 50px;
+    text-align: center;
+}
+#header h2{
+    display: inline-block;
+    margin: 0px 5px;
+}
+#header a{
+    text-decoration: none;
+}
+#info{
+    height: 60px;
+    background-color: rgb(181, 255, 132);
+}
+#days{
+    height: 40px;
+    background-color: rgb(72, 184, 57);
+}
+#content{
+    height: 600px;
+    background-color: rgb(42, 105, 26);
+    position: relative;
+}
+#dialog{
+    width: 220px;
+    height: 240px;
+    border-radius: 10px;
+    background-color: rgb(243, 252, 118);
+    position: absolute;
+    z-index: 50;  
+    /* z축 값이 클수록 위로 올라옴 */
+    display: none;
+    text-align: center;
+}
+
+#dialog input, textarea{
+    border: 1px solid #ccc;
+    margin: 1px;
+}
+#dialog input{
+    width: 96%;
+    height: 27px;
+}
+#dialog textarea{
+    width: 96%;
+    height: 170px;
+}
