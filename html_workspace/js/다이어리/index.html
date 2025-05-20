@@ -43,6 +43,20 @@
             return d.getDate();
         }
 
+        function checkData(curCell, date){
+            //다이어리에 등록된 데이터와 현재 각날짜와 비교하여 년,월,일이 같이 
+            // 다이어리에 등록된 날짜로 간주한다. 제목 출력, 아이콘 출력
+            for(let k = 0; k < diaryArray.length; k++){
+                let diary = diaryArray[k]; //한 건의 다이어리 추출 
+                if(diary.year == currentYear && diary.month == currentMonth && diary.date == date){
+                    //다이어리 제목 출력
+                    curCell.titleDiv.innerText = diary.title;
+                    //아이콘 출력
+                    curCell.renderIcon(diary.icon, 30);
+                }
+            }
+        }
+
         /**
          * 해당 연, 월의 달력의 날짜 출력
          */
@@ -53,12 +67,12 @@
             let date = 0;
             let st = getStartDay(currentYear, currentMonth);
             let end = getLastDate(currentYear, currentMonth);
-            console.log("st " + st + "end " + end);
 
             for(let i = 0; i < 6; i++){
                 for(let j = 0; j < 7; j++){
                     if(index >= st && date < end){
                         cellArray[i][j].setDate(currentYear, currentMonth, ++date);
+                        checkData(cellArray[i][j], date);
                     }
                     index++;
                 }
@@ -93,6 +107,9 @@
                     cellArray[i][j].titleDiv.innerText = "";
 
                     //등록된 아이콘이 있으면 제거
+                    if(cellArray[i][j].iconDiv.children.length > 0){
+                        cellArray[i][j].iconDiv.removeChild(cellArray[i][j].icon);
+                    }
                 }
             }
         }
@@ -117,6 +134,7 @@
 
         //숨겨져 있던, 대화창을 띄우되, 그 위치는 클릭한 셀의 x, y에 위치해야함
         function openDialog(obj){
+            closeDialog();
             //현재 셀에 대한 전역변수인 currentCelldp obj를 보관해놓자
             currentCell = obj;
             let dialog = document.getElementById("dialog");
@@ -127,6 +145,15 @@
             dialog.style.position = "absolute";
             dialog.style.left = obj.x + "px";
             dialog.style.top = obj.y + "px";
+            document.getElementById("t_title").value = obj.titleDiv.innerText;
+
+            //내가 클릭한 cell의 year, month, date와 diary 똑같은거 찾기 
+            for(let k = 0; k < diaryArray.length; k++){
+                let diary = diaryArray[k];
+                if(diary.year == currentYear && diary.month == currentMonth && diary.date == currentCell.date){
+                    document.getElementById("t_detail").value = diary.detail;
+                }
+            }
         }
 
         function closeDialog(){
@@ -194,6 +221,29 @@
                     closeDialog();
                 }
             });
+
+            //이미지를 클릭하면, 파일탐색기를 강제 클릭시키자
+            document.querySelector("#info img").addEventListener("click", ()=>{
+                //강제 클릭 fileChooser
+                document.getElementById("fileChooser").click();  //프로그래밍적 클릭
+
+                //유저가 파일탐색기에서 파일을 선택한 순간에 파일 읽어들이자
+                document.getElementById("fileChooser").addEventListener("change", (e)=>{
+                    let file = e.target.files[0];
+
+                    //파일 읽는 객체
+                    let reader = new FileReader();
+                    reader.onload = function(data){
+                        let obj = JSON.parse(data.target.result);
+                        diaryArray = obj.diaryList;
+
+                        printTitle();
+                        clearCell();
+                        printNum();
+                    }
+                    reader.readAsText(file);
+                });
+            });
         });
 
 
@@ -201,7 +251,10 @@
 </head>
 <body>
     <div id="wrapper">
-        <div id="info"></div>
+        <div id="info">
+            <input type="file" style="display: none;" id="fileChooser">
+            <img src="../../images/clip.png" alt="파일첨부" style="width: 40px">
+        </div>
         <div id="header">
             <a href="javascript:printPrev()">이전</a>
             <h2></h2>
