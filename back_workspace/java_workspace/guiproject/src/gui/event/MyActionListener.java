@@ -7,11 +7,25 @@
  *  */
 
 package gui.event;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Button;
+import gui.chat.*;
 
-class MyActionListener implements ActionListener{
+public class MyActionListener implements ActionListener{
+    Button bt;
+    public MyActionListener(Button bt){
+        this.bt = bt;
+    }
+
     public void actionPerformed(ActionEvent e){
+
         System.out.println("버튼 누름");
+		
+		if(e.getSource() == bt){
+                new ChatB();
+			
+		}
     }
 }
