@@ -5,17 +5,18 @@ import java.awt.Dimension;
 import javax.swing.JProgressBar;
 
 public class MyJProgressBar extends JProgressBar{
-	int n = 0;
-	int d = 3;
+	int speed = 3;
 	boolean flag = true;
-	Dimension dm = new Dimension(750, 40);
 	
-	public MyJProgressBar() {
+	
+	public MyJProgressBar(int speed) {
+		Dimension dm = new Dimension(750, 40);
 		setPreferredSize(dm);
+		this.speed = speed;
 	}
 	
 	public void move() {
-		n += d;
+		int n = getValue() + speed;
 		setValue(n);
 		if(n > 100) flag = false;
 	}

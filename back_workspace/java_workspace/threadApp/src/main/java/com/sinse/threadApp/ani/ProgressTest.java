@@ -21,7 +21,7 @@ public class ProgressTest extends JFrame{
 		
 		
 		for(int i = 0; i < barArray.length; i++) {
-			barArray[i] = new MyJProgressBar();
+			barArray[i] = new MyJProgressBar(i+1);
 			add(barArray[i]);
 		}
 		
