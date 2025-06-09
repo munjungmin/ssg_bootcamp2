@@ -44,7 +44,7 @@ public class AppMain extends JFrame{
 	JLabel la_config;
 	
 	public Connection con;  // 원래 getter 해야되는데 귀찮 (웹에서는 이렇게 안함)
-	public Admin admin;
+	public Admin admin = new Admin();
 	
 	Page[] pages;
 	 
