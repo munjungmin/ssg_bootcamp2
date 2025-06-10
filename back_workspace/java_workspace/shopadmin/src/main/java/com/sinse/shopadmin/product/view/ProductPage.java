@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -51,6 +52,9 @@ public class ProductPage extends Page{
 	TopCategoryDAO topCategoryDAO;
 	SubCategoryDAO subCategoryDAO;
 	
+	
+	JFileChooser chooser;
+	
 	public ProductPage(AppMain appMain) {
 		super(appMain);
 		setBackground(Color.CYAN);
@@ -84,6 +88,9 @@ public class ProductPage extends Page{
 		
 		topCategoryDAO = new TopCategoryDAO();
 		subCategoryDAO = new SubCategoryDAO();
+		
+		
+		chooser = new JFileChooser("C:\\repos\\ssg_bootcamp2\\images");
 		
 		//스타일
 		Dimension d = new Dimension(400, 30);
@@ -176,7 +183,6 @@ public class ProductPage extends Page{
 		dummy.setTop_name("상위 카테고리를 선택하세요");
 		dummy.setTopcategory_id(0);
 		cb_topcategory.addItem(dummy);
-		
 		
 		
 		for(int i = 0; i < topList.size(); i++) {
