@@ -19,10 +19,12 @@ public class UploadDialog extends JDialog{
 		dialog.setLocationRelativeTo(productPage);
 		dialog.setLayout(new FlowLayout());
 		
+		productPage.newFiles = new File[productPage.files.length];
 		//커스텀된 바를 임시로 6개 화면에 부착해보자 
 		for(int i = 0; i < productPage.files.length; i++) {
-			
 			File dest = FileUtil.createFile(Config.PRODUCT_IMAGE_PATH, FileUtil.getExt(productPage.files[i].getName()));
+			productPage.newFiles[i] = dest;
+			
 			MyBar bar = new MyBar(productPage.files[i], dest);
 			Thread thread = new Thread(bar);
 			thread.start();
