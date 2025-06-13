@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.sinse.shopadmin.common.exception.ProductSizeException;
 import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.product.model.ProductSize;
 
 public class ProductSizeDAO {
 	DBManager dbManager = DBManager.getInstance();
 	
-	public int insert(ProductSize productSize) {
+	public void insert(ProductSize productSize) throws ProductSizeException{
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int result = 0;
 		
 		con = dbManager.getConnection();
 		StringBuffer sql = new StringBuffer();
@@ -22,14 +22,19 @@ public class ProductSizeDAO {
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, productSize.getProduct().getProduct_id());
 			pstmt.setInt(2, productSize.getSize().getSize_id());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
+			int result = pstmt.executeUpdate();
 			
+			if(result < 1) {
+				throw new ProductSizeException("사이즈 등록이 실패했습니다.");
+			}
+			
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ProductSizeException("사이즈 등록이 실패했습니다.", e);
 		} finally {
 			dbManager.release(pstmt);
 		}
 		
-		return result;
 	}
 }
