@@ -8,6 +8,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import com.sinse.shop.AppMain;
 import com.sinse.shop.common.config.Config;
 import com.sinse.shop.common.util.ImageUtil;
 import com.sinse.shop.common.view.Page;
@@ -18,7 +19,8 @@ public class MainPage extends Page{
 	ImageUtil imageUtil = new ImageUtil(); // 쓸거니까 보유
 	Image image;
 	
-	public MainPage() {
+	public MainPage(AppMain appMain) {
+		super(appMain);
 		// 생성
 		
 		// 이미지를 paint 하자 -> 패널을 이름없는 익명 클래스로 재정의, 별도의 .java 파일을 생성할 필요 없음
