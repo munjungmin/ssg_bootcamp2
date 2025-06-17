@@ -15,6 +15,7 @@ import com.sinse.shop.common.config.Config;
 import com.sinse.shop.common.view.Page;
 import com.sinse.shop.home.MainPage;
 import com.sinse.shop.member.view.MemberJoin;
+import com.sinse.shop.product.view.ProductDetailPage;
 
 /**
  * com.sinse.shop.도메인
@@ -46,7 +47,7 @@ public class AppMain extends JFrame{
 	JLabel la_best;
 	JLabel la_cs;
 	
-	Page[] pages;
+	public Page[] pages;
 	
 	public AppMain() {
 		
@@ -122,12 +123,14 @@ public class AppMain extends JFrame{
 	//쇼핑몰의 모든 페이지를 생성하여 부착
 	public void createPage() {
 		//배열 생성
-		pages = new Page[2];  // 본인이 만든 페이지 수로 추후 대체
+		pages = new Page[3];  // 본인이 만든 페이지 수로 추후 대체
 		
 		
 		//페이지 생성
 		pages[0] = new MainPage(this);
 		pages[1] = new MemberJoin(this);
+		pages[2] = new ProductDetailPage(this);
+		
 		
 		//모든 페이지를 p_container 부착
 		for(int i = 0; i < pages.length; i++) {
@@ -144,6 +147,10 @@ public class AppMain extends JFrame{
 		}
 		
 	}
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		new AppMain();

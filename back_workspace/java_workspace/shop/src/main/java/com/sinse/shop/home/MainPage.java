@@ -12,12 +12,19 @@ import com.sinse.shop.AppMain;
 import com.sinse.shop.common.config.Config;
 import com.sinse.shop.common.util.ImageUtil;
 import com.sinse.shop.common.view.Page;
+import com.sinse.shop.product.model.Product;
 
 public class MainPage extends Page{
 	JPanel p_visual;   //메인 비쥬얼 영억(메인 배너 - carousel? 움직이는 영역?)
 	JPanel p_content;  // 상품이 출력될 영역 
 	ImageUtil imageUtil = new ImageUtil(); // 쓸거니까 보유
 	Image image;
+
+	
+	
+	//최신 상품 목록 중 유저가 지금 클릭한 그 상품
+	public Product product;
+	
 	
 	public MainPage(AppMain appMain) {
 		super(appMain);

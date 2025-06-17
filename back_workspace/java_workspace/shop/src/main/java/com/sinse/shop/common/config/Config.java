@@ -6,13 +6,12 @@ public class Config {
 	public static final String user = "shop";
 	public static final String pwd = "1234";
 	
-	
 	/**
 	 * 페이지 정의
 	 */
 	public static final int MAIN_PAGE= 0;
 	public static final int JOIN_PAGE= 1;
-	public static final int PRODUCT_PAGE= 2;
+	public static final int PRODUCT_DETAIL_PAGE= 2;
 	public static final int CUSTOMER_PAGE= 3;
 	public static final int lOGIN_PAGE= 4;
 	public static final int WISHLIST_PAGE= 5;
