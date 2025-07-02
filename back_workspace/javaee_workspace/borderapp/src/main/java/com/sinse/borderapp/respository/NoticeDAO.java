@@ -1,98 +1,68 @@
 package com.sinse.borderapp.respository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.sinse.borderapp.exception.NoticeException;
 import com.sinse.borderapp.model.Notice;
-import com.sinse.borderapp.pool.PoolManager;
+import com.sinse.borderapp.mybatis.MybatisConfig;
 
 //CRUD
 public class NoticeDAO {
 	
-	PoolManager poolManager = PoolManager.getInstance();
+	MybatisConfig config = MybatisConfig.getInstance();
 	
 	//모든 레코드 가져오기
 	public List selectAll() {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<Notice> list = new ArrayList<>();
-		
-		try {
-			con = poolManager.getConnection();
-			StringBuffer sql = new StringBuffer();
-			sql.append("select * from notice");
-			
-			pstmt = con.prepareStatement(sql.toString());
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				Notice notice = new Notice();
-				notice.setNotice_id(rs.getInt("notice_id"));
-				notice.setTitle(rs.getString("title"));
-				notice.setWriter(rs.getString("writer"));
-				notice.setContent(rs.getString("content"));
-				notice.setRegdate(rs.getString("regdate"));
-				notice.setHit(rs.getInt("hit"));
-				list.add(notice);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			poolManager.release(con, pstmt, rs);
-		}
+		SqlSession sqlSession = config.getSqlSession();
+		List list = sqlSession.selectList("Notice.selectAll");
+		sqlSession.close();
 		return list;
 	}
 	
 	//한 건 가져오기 
 	public Notice select(int notice_id) {
-	
-		return null;
+		SqlSession sqlSession = config.getSqlSession();
+		Notice notice = sqlSession.selectOne("Notice.select", notice_id);  // sql문과 파라미터 
+		sqlSession.close();
+		return notice;
 	}
 	
 	public void insert(Notice notice) throws NoticeException{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			con = poolManager.getConnection();
-			StringBuffer sql = new StringBuffer();
-			sql.append("insert into notice(title, writer, content) values(?, ?, ?)");
-			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, notice.getTitle());
-			pstmt.setString(2, notice.getWriter());
-			pstmt.setString(3, notice.getContent());
-			
-			int result = pstmt.executeUpdate();  //DML 수행 
-			
-			if(result < 1) {
-				throw new NoticeException("글 등록 실패");
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			poolManager.release(con, pstmt);
+		SqlSession sqlSession = config.getSqlSession();
+		int result = sqlSession.insert("Notice.insert", notice);
+		sqlSession.commit(); // DML의 트랜잭션 확정 
+		sqlSession.close();
+		if(result < 1) {
+			throw new NoticeException("등록 실패");
 		}
-		
 	}
 	
 	//수정
-	public void update() {
-		
+	public void update(Notice notice) throws NoticeException {
+		SqlSession sqlSession = config.getSqlSession();
+		int result = sqlSession.update("com.sinse.borderapp.model.Notice.update", notice);
+		sqlSession.commit();
+		sqlSession.close();
+		if(result < 1) {
+			throw new NoticeException("글 수정 실패");
+		}
 	}
 	
 	//삭제
-	public void delete() {
-		
+	public void delete(int notice_id) throws NoticeException {
+		SqlSession sqlSession = config.getSqlSession();
+		int result = sqlSession.delete("com.sinse.borderapp.model.Notice.delete", notice_id);
+		sqlSession.commit();
+		sqlSession.close();
+		if(result < 1) {
+			throw new NoticeException("글 삭제 실패");
+		}
 	}
 	
 }
