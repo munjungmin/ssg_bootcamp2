@@ -3,8 +3,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.sinse.borderapp.model.Notice" alias="Notice"/>
-		<typeAlias type=""/>
-		<typeAlias type=""/>
+		<typeAlias type="com.sinse.borderapp.model.News" alias="News"/>
+		<typeAlias type="com.sinse.borderapp.model.Comment" alias="Comment"/>
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -19,5 +19,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/sinse/borderapp/mybatis/NoticeMapper.xml" />
+		<mapper resource="com/sinse/borderapp/mybatis/NewsMapper.xml" />
+		<mapper resource="com/sinse/borderapp/mybatis/CommentMapper.xml" />
 	</mappers>
 </configuration>
