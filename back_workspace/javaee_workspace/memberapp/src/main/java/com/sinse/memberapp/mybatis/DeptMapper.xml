@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dept">
+	<!-- 부서목록 출력 -->
+	<!-- 
+		select d.deptno, d.dname, d.loc, count(e.empno)
+		from dept d 
+		left outer join emp e
+		on d.deptno = e.deptno 
+		group by d.deptno;
+	 -->
+	 
+	 <resultMap type="Dept" id="DeptEmpMap">
+	 	<id column="deptno" property="deptno"/>
+	 	<result column="dname" property="dname"/>
+	 	<result column="loc" property="loc"/>
+	 	<collection 
+	 		column="deptno"  
+	 		javaType="java.util.List" 
+	 		ofType="Emp" 
+	 		property="empList" 
+	 		select="Emp.selectByDeptno"   
+	 	/>  <!-- selectByDeptno의 매개변수인 deptno는 column 값으로 넘겨준다는 뜻 -->
+	 </resultMap>
+	 
+	 <select id="selectAll" resultMap="DeptEmpMap">
+	 	select deptno, dname, loc from dept   <!-- detpno, dname, loc는 모델에 그대로 매핑해주지만 모델에 있는 empList는 X, 여기까지 하고 map에 맡기겟다.-->
+	 </select>
+	 
+	 <select id="select" parameterType="int" resultType="Dept">
+	 	select * from dept where deptno = #{deptno}
+	 </select>
+
+</mapper>
