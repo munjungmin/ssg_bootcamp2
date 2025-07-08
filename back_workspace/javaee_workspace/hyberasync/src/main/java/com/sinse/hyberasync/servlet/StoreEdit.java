@@ -18,23 +18,26 @@ import com.sinse.hyberasync.model.Message;
 import com.sinse.hyberasync.model.Store;
 import com.sinse.hyberasync.repository.StoreDAO;
 
-// 맛집 등록 요청을 처리하는 서블릿
-public class StoreRegist extends HttpServlet{
+//맛집 정보 수정 요청을 처리하는 서블릿
+public class StoreEdit extends HttpServlet{
 	
-	Logger logger = LoggerFactory.getLogger(getClass());
+	Logger logger=LoggerFactory.getLogger(getClass());
 	StoreDAO storeDAO = new StoreDAO();
 	
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String food_type_id = request.getParameter("food_type_id");
-		String store_name = request.getParameter("store_name");
-		String tel = request.getParameter("tel");
+		String store_id=request.getParameter("store_id");
+		String store_name=request.getParameter("store_name");
+		String tel=request.getParameter("tel");
+		String food_type_id=request.getParameter("food_type_id");
 		
-		logger.debug("food_type_id="+food_type_id);
-		logger.debug("store_name=" + store_name);
+		logger.debug("store_id="+store_id);
+		logger.debug("store_name="+store_name);
 		logger.debug("tel="+tel);
+		logger.debug("food_type_id="+food_type_id);
 		
+		//파라미터를 Store에 적재 (부모도 포함) 
 		Store store = new Store();
+		store.setStore_id(Integer.parseInt(store_id));
 		store.setStore_name(store_name);
 		store.setTel(tel);
 		
@@ -42,26 +45,23 @@ public class StoreRegist extends HttpServlet{
 		foodType.setFood_type_id(Integer.parseInt(food_type_id));
 		store.setFoodType(foodType);
 		
-		// 응답정보를 html이 아닌 json으로 생성하여 보내자 
+		//응답정보 만들기 
+		Message message = new Message();
+		Gson gson=new Gson();
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
-		Message msg = new Message();
-		Gson gson = new Gson();
 		
 		try {
-			storeDAO.insert(store);
-			//Http Status Code : 서버가 클라이언트에게 응답 시 보내는 상태 코드 (성공, 실패 ...)
-			//IETF(Internet Engineering Task Force) - 인터넷 표준 프로토콜을 정의하는 국제 조직
-			response.setStatus(HttpServletResponse.SC_CREATED);
-			msg.setResult("success");
-			msg.setMsg("등록 성공");
-			
+			storeDAO.update(store);
+			response.setStatus(HttpServletResponse.SC_NO_CONTENT);//204
+			message.setResult("success");
+			message.setMsg("수정 성공");
 		} catch (StoreException e) {
 			e.printStackTrace();
-			msg.setResult("fail");
-			msg.setMsg(e.getMessage());
+			message.setResult("fail");
+			message.setMsg(e.getMessage());
 		}
-		out.print(gson.toJson(msg));  //메시지가 json 문자열로 변환되어 전송
+		out.print(gson.toJson(message));
+		
 	}
-
 }

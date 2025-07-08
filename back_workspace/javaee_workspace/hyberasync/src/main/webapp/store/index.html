@@ -91,7 +91,14 @@
 		
 		xhttp.open("GET", "/store/detail?store_id=" + store_id);
 		xhttp.onload = function(){
-
+			console.log("서버의 응답정보는 ", this.responseText);
+			let store = JSON.parse(this.responseText); 
+			
+			//hidden 채우기
+			$("#aside_detail input[name='store_id']").val(store.store_id);
+			$("#aside_detail input[name='store_name']").val(store.store_name);
+			$("#aside_detail input[name='tel']").val(store.tel);
+			$("#aside_detail select").val(store.foodType.food_type_id);
 		};
 		xhttp.send();
 		
@@ -148,7 +155,7 @@
 			}
 		}
 		
-		//전송 파라미터 만들기 
+		//전송 파라미터 만들기
 		let param = "food_type_id="+$("#aside_regist select").val();
 		param += "&store_name="+ $("#aside_regist input[name='store_name']").val();
 		param += "&tel="+$("#aside_regist input[name='tel']").val();
@@ -156,19 +163,41 @@
 		
 	}
 
+	function edit(){
+		let xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "/store/edit");
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		
+		//우측 영역의 입력 컴포넌트들로부터 값을 대입하자 
+		let param = "store_name=" + $("#aside_detail input[name='store_name']").val();
+		param += "&tel=" + $("aside_detail input[name='tel']").val();
+		param += "&food_type_id=" + $("aside_detail select").val();
+		param += "&store_id=" + $("aside_detail input[name='store_id']").val();
+		xhttp.send(param); 
+	}
+	
+	function del(){
+
+	}
+	
 	$(()=>{
 		getFoodList();
 		getStoreList();
 		$("#aside_regist button").click(()=>{
 				regist();			
 			})	
+			
+		$("#bt_edit").click(()=>{
+			edit();
+		})
+			
 	})
 </script>
 </head>
 <body>
 	<div id="wrapper">
 		<div id="aside_regist">
-			<select name="food_type_id">	</select>  <!-- 서버에서 카테고리를 가져올 것 -->
+			<select name="food_type_id"></select>  <!-- 서버에서 카테고리를 가져올 것 -->
 			<input type="text" name="store_name" placeholder="맛집 상호명">
 			<input type="text" name="tel" placeholder="연락처">
 			<button type="button">등록</button>
@@ -186,11 +215,13 @@
 			<div id="list"></div>
 		</div>
 		<div id="aside_detail">
-			<select>	</select>  <!-- 서버에서 카테고리를 가져올 것 -->
+			<select></select>  <!-- 서버에서 카테고리를 가져올 것 -->
+			<input type="hidden" name="store_id">
 			<input type="text" placeholder="맛집 상호명">
 			<input type="text" placeholder="연락처">
-			<button>수정</button>
-			<button>삭제</button>
+			
+			<button id="bt_edit">수정</button>
+			<button id="bt_del">삭제</button>
 		</div>	
 	</div>
 

@@ -8,39 +8,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.sinse.hyberasync.exception.StoreException;
 import com.sinse.hyberasync.model.Message;
 import com.sinse.hyberasync.model.Store;
 import com.sinse.hyberasync.repository.StoreDAO;
 
-public class StoreDetail extends HttpServlet{
+public class StoreDelete extends HttpServlet{
 	
-	Logger logger=LoggerFactory.getLogger(getClass());
 	StoreDAO storeDAO = new StoreDAO();
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String store_id=request.getParameter("store_id");
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String store_id = request.getParameter("store_id");
 		
-		response.setContentType("application/json");
+		Store store = new Store();
+		store.setStore_id(Integer.parseInt(store_id));
 		
-		logger.debug("store_id"+store_id);
-		Gson gson=new Gson();
-		PrintWriter out = response.getWriter();
+		//응답정보 만들기 
 		Message message = new Message();
+		Gson gson=new Gson();
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
 		
 		try {
-			Store store = storeDAO.select(Integer.parseInt(store_id));
-			out.print(gson.toJson(store));//문자열 로 변환하여 전송하기 위함
+			storeDAO.delete(store);
+			response.setStatus(HttpServletResponse.SC_NO_CONTENT);//204
+			message.setResult("success");
+			message.setMsg("삭제 성공");
+			
 		} catch (StoreException e) {
 			e.printStackTrace();
 			message.setResult("fail");
 			message.setMsg(e.getMessage());
-			out.print( gson.toJson(message));
 		}
+		
+		out.print(gson.toJson(message));
 		
 	}
 }
