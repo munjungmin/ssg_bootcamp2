@@ -30,33 +30,19 @@ public class DispatcherServlet extends HttpServlet{
 	
 	protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		/*
+		 *  매 요청마다 1:1 대응되는 매핑을 피하기 위해 하나의 진입점으로 몰았으나, 
+		 *  진입점이 되는 클래스가 매 요청마다 1:1 대응되는 if 조건문이 작성되고 있음 
+		 */
 		if(request.getRequestURI().equals("/blood.do")) { //클라이언트의 
-		
-			//요청을 받는다. 
-			//요청 분석 
-			String blood = request.getParameter("blood");
+			// 혈액형을 전문적으로 처리하는 컨트롤러에게 업무 분담!
+			// 요청에 대한 처리를 1:1 대응하는 객체로 처리하는 개발 패턴을 가리켜 Command Pattern
+			BloodController controller = new BloodController();
+			controller.execute(request, response);
 			
-			BloodManager manager = new BloodManager();
-			String result = manager.getAdvice(blood);
-			
-			HttpSession session = request.getSession();  // 이 요청에 의해 접근할 수 있는 세션 얻기 
-			session.setAttribute("msg", result);  // 4. 데이터 보관
-			
-			//결과를 보여줄 알맞는 뷰 선택
-			response.sendRedirect("/blood/result.jsp");   //클라이언트의 재접속 강제
 		} else if(request.getRequestURI().equals("/color.do")) {
-			//요청을 받는다. 
-			//요청 분석 
-			String color = request.getParameter("color");
-			
-			ColorManager manager = new ColorManager();
-			String result = manager.getAdvice(color);
-			
-			HttpSession session = request.getSession();  // 이 요청에 의해 접근할 수 있는 세션 얻기 
-			session.setAttribute("msg", result);  // 4. 데이터 보관
-			
-			//결과를 보여줄 알맞는 뷰 선택
-			response.sendRedirect("/color/result.jsp");   //클라이언트의 재접속 강제
+			ColorController controller = new ColorController();
+			controller.execute(request, response);
 		}
 	}
 

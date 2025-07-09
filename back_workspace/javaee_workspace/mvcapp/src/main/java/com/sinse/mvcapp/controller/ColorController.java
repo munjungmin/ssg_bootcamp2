@@ -19,8 +19,7 @@ import com.sinse.mvcapp.color.model.ColorManager;
 public class ColorController extends HttpServlet{
 	ColorManager manager = new ColorManager();
 	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/**
 		 *  컨트롤러의 5대 업무
 		 *  1) 요청을 받는다.

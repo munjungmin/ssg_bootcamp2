@@ -11,13 +11,11 @@ import javax.servlet.http.HttpSession;
 import com.sinse.mvcapp.color.model.BloodManager;
 
 //혈액형에 대한 판단 요청을 처리하는 컨트롤러 정의
-public class BloodController extends HttpServlet{
+public class BloodController {
 	
 	BloodManager manager = new BloodManager();
 	
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//1) 요청을 받는다.
 		String blood = request.getParameter("blood");
@@ -28,7 +26,7 @@ public class BloodController extends HttpServlet{
 		
 		//4) 뷰로 가져갈 것이 있다면 저장
 		HttpSession session = request.getSession();
-		session.setAttribute("msg2", result);
+		session.setAttribute("msg", result);
 		
 		//5) 알맞는 뷰 보여주기
 		response.sendRedirect("/blood/result.jsp");		
