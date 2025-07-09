@@ -29,7 +29,12 @@ public class BloodController implements Controller{
 		session.setAttribute("msg", result);
 		
 		//5) 알맞는 뷰 보여주기
-		response.sendRedirect("/blood/result.jsp");		
+		//response.sendRedirect("/blood/result.jsp");		
 		
+	}
+	
+	@Override
+	public String getViewPage() {
+		return "/blood/result/view";
 	}
 }

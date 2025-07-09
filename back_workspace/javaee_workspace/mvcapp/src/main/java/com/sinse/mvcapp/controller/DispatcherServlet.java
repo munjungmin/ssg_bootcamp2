@@ -66,6 +66,8 @@ public class DispatcherServlet extends HttpServlet{
 			Class clazz = Class.forName(props.getProperty(request.getRequestURI()));
 			controller = (Controller)clazz.newInstance();
 			controller.execute(request, response);
+			
+			response.sendRedirect(props.getProperty(controller.getViewPage()));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
