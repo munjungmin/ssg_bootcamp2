@@ -1,16 +1,9 @@
-<%@page import="com.sinse.borderapp.model.Notice"%>
+<%@page import="com.sinse.mvcapp.model.Notice"%>
 <%@page import="java.util.List"%>
-<%@page import="com.sinse.borderapp.respository.NoticeDAO"%>
+<%@page import="com.sinse.mvcapp.respository.NoticeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%!   
-	//list.jsp가 톰캣에 의해, 서블릿으로 작성될 때 멤버 영역 (선언부)
-	NoticeDAO noticeDAO = new NoticeDAO();  //이걸 service()에 두면 요청이 들어올때마다 dao 인스턴스를 만들어 낭비
-		
-%>
 <%
-	// 요청을 받는 service() 메서드 영역 
-	List<Notice> list = noticeDAO.selectAll();
-
+	List<Notice> list = (List)session.getAttribute("noticeList");
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +54,7 @@ tr:nth-child(even) {
   <% Notice notice = list.get(i); %>
   <tr>
     <td><%=notice.getNotice_id() %></td>
-    <td><a href="/notice/content.jsp?notice_id=<%=notice.getNotice_id()%>"><%=notice.getTitle() %></a></td>
+    <td><a href="/notice/content.do?notice_id=<%=notice.getNotice_id()%>"><%=notice.getTitle() %></a></td>
     <td><%=notice.getWriter() %></td>
     <td><%=notice.getRegdate().substring(0, 10) %></td>
     <td><%=notice.getHit() %></td>

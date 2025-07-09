@@ -32,7 +32,7 @@
 	
 	 -->
  
-	<update id="update" parameterType="com.sinse.borderapp.model.Notice">
+	<update id="update" parameterType="Notice">
 		update notice set title=#{title}, writer = #{writer}, content = #{content} 
 		where notice_id = #{notice_id}
 	</update>

@@ -2,9 +2,7 @@
 <!DOCTYPE configuration SYSTEM "mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.sinse.borderapp.model.Notice" alias="Notice"/>
-		<typeAlias type="com.sinse.borderapp.model.News" alias="News"/>
-		<typeAlias type="com.sinse.borderapp.model.Comment" alias="Comment"/>
+		<typeAlias type="com.sinse.mvcapp.model.Notice" alias="Notice"/>
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -18,8 +16,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/sinse/borderapp/mybatis/NoticeMapper.xml" />
-		<mapper resource="com/sinse/borderapp/mybatis/NewsMapper.xml" />
-		<mapper resource="com/sinse/borderapp/mybatis/CommentMapper.xml" />
+		<mapper resource="com/sinse/mvcapp/mybatis/NoticeMapper.xml" />
 	</mappers>
 </configuration>

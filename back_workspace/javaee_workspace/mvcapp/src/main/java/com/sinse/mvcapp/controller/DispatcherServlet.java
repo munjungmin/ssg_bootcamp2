@@ -42,16 +42,18 @@ public class DispatcherServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("doGet 진입");
 		doRequest(request, response);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("doPost 진입");
 		doRequest(request, response);
 	}
 	
 	protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		logger.debug("doRequest 진입");
 		/*
 		 *  매 요청마다 1:1 대응되는 매핑을 피하기 위해 하나의 진입점으로 몰았으나, 
 		 *  진입점이 되는 클래스가 매 요청마다 1:1 대응되는 if 조건문이 작성되고 있음 

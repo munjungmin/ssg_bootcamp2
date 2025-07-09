@@ -21,7 +21,7 @@ public class MybatisConfig {
 	private SqlSessionFactory sqlSessionFactory;  //mybatisconfig만 제어할 수 있도록 private 처리
 	
 	private MybatisConfig() {
-		String resource = "com/sinse/borderapp/mybatis/mybatis-config.xml";
+		String resource = "com/sinse/mvcapp/mybatis/mybatis-config.xml";
 		try {
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
