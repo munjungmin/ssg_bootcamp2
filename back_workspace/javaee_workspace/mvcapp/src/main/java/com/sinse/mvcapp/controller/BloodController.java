@@ -11,11 +11,11 @@ import javax.servlet.http.HttpSession;
 import com.sinse.mvcapp.color.model.BloodManager;
 
 //혈액형에 대한 판단 요청을 처리하는 컨트롤러 정의
-public class BloodController {
+public class BloodController implements Controller{
 	
 	BloodManager manager = new BloodManager();
 	
-	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//1) 요청을 받는다.
 		String blood = request.getParameter("blood");
