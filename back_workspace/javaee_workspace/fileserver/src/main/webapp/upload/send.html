@@ -1,0 +1,30 @@
+<!-- 로컬의 이미지를 웹서버에 올리자 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	// onload 
+	$(()=>{
+		//누구를, 어떻게()
+		$("button").click(() => {
+			//HTTP 전송을 위해 필요한 정보 
+			// Get, Post 방식
+			$("form").attr("method", "post");   // form태그의 속성 중 method 값을 post로 설정
+			$("form").attr("action", "/upload/regist");   // 서버의 누구에게 요청 (jsp 혹은 서블릿에게 요청), 서블릿은 직접 명시 불가하므로 web.xml에 했던 매핑 정보 입력
+			$("form").submit();
+		});
+	});
+</script>
+</head>
+<body>
+<!-- 폼으로 전송할 수 있는 데이터에 바이너리 파일 포함-->
+<form enctype="multipart/form-data">  <!-- 폼 태그는 보낼 데이터를 정하는 전송 범위이다. -->
+	<input type="text" placeholder="제목 입력" name="title">
+	<input type="file" name="photo">
+	<button type="button">전송</button>
+</form>
+</body>
+</html>

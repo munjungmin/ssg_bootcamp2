@@ -17,17 +17,13 @@ import myframework.staff.model.domain.Bio;
 import myframework.staff.model.domain.Staff;
 import myframework.staff.model.repository.BioDAO;
 import myframework.staff.model.repository.StaffDAO;
+import myframework.staff.model.service.StaffService;
 import myframework.web.servlet.Controller;
 
 //사원 등록 요청을 처리하는 하위 컨트롤러 (3, 4단계 업무 수행)
 public class RegistController implements Controller{
-	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	//두개의 DAO를 트랜잭션으로 묶기 위해 SqlSession을 공유하기 위해 
-	MybatisConfig config = MybatisConfig.getInstance();
-	
-	StaffDAO staffDAO = new StaffDAO();
-	BioDAO bioDAO = new BioDAO();
+	StaffService staffService = new StaffService();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,22 +47,7 @@ public class RegistController implements Controller{
 		bio.setWeight(Integer.parseInt(weight));
 		bio.setStaff(staff);
 		
-		SqlSession sqlSession = config.getSqlSession();
-		//일시키기
-		try {
-			logger.debug("사원 등록 전의 staff_id=" + staff.getStaff_id());
-			staffDAO.insert(sqlSession, staff);
-			
-			logger.debug("사원 등록 후의 staff_id=" + staff.getStaff_id());
-			bioDAO.insert(sqlSession, bio);
-			sqlSession.commit();
-			
-		} catch (StaffException | BioException e) {
-			e.printStackTrace();
-			sqlSession.rollback();
-		} finally {
-			sqlSession.close();
-		}
+		staffService.regist(bio);
 	}
 
 	@Override

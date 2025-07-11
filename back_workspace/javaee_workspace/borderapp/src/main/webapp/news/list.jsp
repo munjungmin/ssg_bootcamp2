@@ -1,6 +1,6 @@
 <%@page import="com.sinse.borderapp.model.News"%>
 <%@page import="java.util.List"%>
-<%@page import="com.sinse.borderapp.respository.NewsDAO"%>
+<%@page import="com.sinse.mvcapp.respository.NewsDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 	pageEncoding="UTF-8"%>
 <%! NewsDAO newsDAO = new NewsDAO(); %>
