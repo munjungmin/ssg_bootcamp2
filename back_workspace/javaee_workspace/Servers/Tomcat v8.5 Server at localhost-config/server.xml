@@ -175,7 +175,7 @@
       	<ResourceLink global="jndi/mysql" name="jndi/mysql" type="javax.sql.DataSource"/>
       
       </Context>
-      <Context docBase="hyberasync" path="/hyberasync" reloadable="true" source="org.eclipse.jst.jee.server:hyberasync"/><Context docBase="mvcapp" path="/mvcapp" reloadable="true" source="org.eclipse.jst.jee.server:mvcapp"/><Context docBase="mvcproject" path="/mvcproject" reloadable="true" source="org.eclipse.jst.jee.server:mvcproject"/><Context docBase="myframework" path="/" reloadable="true" source="org.eclipse.jst.jee.server:myframework"/></Host>
+      <Context docBase="hyberasync" path="/hyberasync" reloadable="true" source="org.eclipse.jst.jee.server:hyberasync"/><Context docBase="mvcapp" path="/mvcapp" reloadable="true" source="org.eclipse.jst.jee.server:mvcapp"/><Context docBase="mvcproject" path="/mvcproject" reloadable="true" source="org.eclipse.jst.jee.server:mvcproject"/><Context docBase="myframework" path="/myframework" reloadable="true" source="org.eclipse.jst.jee.server:myframework"/><Context docBase="springmvc" path="/springmvc" reloadable="true" source="org.eclipse.jst.jee.server:springmvc"/><Context docBase="mall" path="/" reloadable="true" source="org.eclipse.jst.jee.server:mall"/></Host>
     </Engine>
   </Service>
 </Server>
