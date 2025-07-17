@@ -1,0 +1,27 @@
+# === 공통 빌드 아티팩트 ===
+**/target/
+**/bin/
+**/build/
+**/out/
+
+# === IDE 설정 파일 ===
+**/.classpath
+**/.project
+**/.settings/
+**/.vscode/
+**/*.iml
+**/.idea/
+
+# === 서버 환경 파일 ===
+Servers/
+**/Servers/
+
+# === OS별 임시 파일 ===
+.DS_Store
+Thumbs.db
+
+# === 로그 파일 ===
+*.log
+
+# === Maven 설정 ===
+**/mvn/

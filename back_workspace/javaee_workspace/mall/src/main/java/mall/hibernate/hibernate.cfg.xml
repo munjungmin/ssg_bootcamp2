@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+    <session-factory>
+    	<property name="hibernate.connection.datasource">java:comp/env/jndi/mysql</property>
+    	<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+    	
+    	<mapping class="mall.domain.Notice"/>
+    	
+    </session-factory>
+</hibernate-configuration>
+
+<!-- 이건 프로그래밍 언어가 아니라 설정 파일에 불과하므로 이걸 읽어들이는 코드 작성이 필요 -->
